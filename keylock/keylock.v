@@ -14,6 +14,7 @@ module keylock (
     parameter unlock = 3'b111;
 
     reg [2:0] current_state, next_state;
+    assign locked = 1;
 
     // State register (sequential logic)
     always @(posedge reset) begin
