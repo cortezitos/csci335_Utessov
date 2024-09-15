@@ -10,8 +10,8 @@ module ALU (
 );
     always @(*) begin
         case(mode)
-	    1'b0: arithmetic a (select, in_a, in_b, alu_out)
-	    1'b1: logic l(select, in_a, in_b, alu_out);
+	    1'b0: arithmetic zero (select, in_a, in_b, alu_out)
+	    1'b1: logik one (select, in_a, in_b, alu_out);
         endcase 
     end 
 
@@ -22,7 +22,7 @@ module ALU (
 
 endmodule;
 
-module logic (
+module logik (
     input wire [3:0] select, 
     input wire [15:0] A, B, 
     output wire [15:0] alu_out);
