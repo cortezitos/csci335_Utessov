@@ -36,20 +36,19 @@ int main(int argc, char **argv) {
             tb->rst = 0;  // Deassert reset
         }
 
-        // Apply the enable signal
-        tb->enable = enable;
-
         // Evaluate the model (tick the clock)
         tb->eval();
-
+        vcd_trace->dump(sim_time); 
         // Simulate the key sequence 335256
         int code[6] = {3, 3, 5, 2, 5, 6};
         for (int i = 0; i < 6; i++) {
             tb->key = code[i];  // Send each digit
             tb->eval();         // Evaluate after each input
-            vcd_trace->dump(i * 10);  // Dump the simulation state after every step (adjust timing as needed)
+            vcd_trace->dump(sim_time);  // Dump the simulation state after every step (adjust timing as needed)
             std::cout << "Key entered: " << code[i] << ", Locked state: " << tb->locked << std::endl;
         }
+
+
 
         if (tb->locked == 0) {
             std::cout << "Unlocked successfully!" << std::endl;
