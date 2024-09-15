@@ -9,10 +9,8 @@ module alu (
     output wire [15:0]  alu_out
 );
     always @(*) begin
-        case(mode)
-	    1'b1: logik l0 (select, in_a, in_b, alu_out);
-	    1'b0: arithmetic a0 (select, in_a, in_b, carry_in, carry_out, alu_out);
-        endcase 
+        if (mode == 0) logik l0 (select, in_a, in_b, alu_out);
+	    else arithmetic a0 (select, in_a, in_b, carry_in, carry_out, alu_out); 
     end 
 
 
