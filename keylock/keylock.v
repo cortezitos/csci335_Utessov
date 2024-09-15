@@ -1,5 +1,5 @@
 module keylock (
-    input clk
+    input clk,
     input reset,          // Input reset signal
     input [3:0] key,      // Input key (4-bit to handle numbers 0-9)
     output reg locked     // Output locked signal
