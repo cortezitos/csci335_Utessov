@@ -1,5 +1,4 @@
 module keylock (
-    input clk,
     input reset,          // Input reset signal
     input [3:0] key,      // Input key (4-bit to handle numbers 0-9)
     output reg locked     // Output locked signal
@@ -17,7 +16,7 @@ module keylock (
     reg [2:0] current_state, next_state;
 
     // State register (sequential logic)
-    always @(posedge clk or posedge reset) begin
+    always @(posedge reset) begin
         if (reset) begin
             current_state <= initials;
         end else begin
@@ -29,34 +28,34 @@ module keylock (
     always @(*) begin
         case (current_state)
             initials: begin
-                if (key == 3) next_state = first_three;
-                else next_state = initials;
+                if (key == 3) current_state = first_three;
+                else current_state = initials;
             end
             first_three: begin
-                if (key == 3) next_state = second_three;
-                else next_state = initials;
+                if (key == 3) current_state = second_three;
+                else current_state = initials;
             end
             second_three: begin
-                if (key == 5) next_state = five;
-                else next_state = initials;
+                if (key == 5) current_state = five;
+                else current_state = initials;
             end
             five: begin
-                if (key == 2) next_state = second_two;
-                else next_state = initials;
+                if (key == 2) current_state = second_two;
+                else current_state = initials;
             end
             second_two: begin
-                if (key == 5) next_state = second_five;
-                else next_state = initials;
+                if (key == 5) current_state = second_five;
+                else current_state = initials;
             end
             second_five: begin
-                if (key == 6) next_state = unlock;
-                else next_state = initials;
+                if (key == 6) current_state = unlock;
+                else current_state = initials;
             end
             unlock: begin
-                next_state = unlock;  // Stay in unlock state
+                current_state = unlock;  // Stay in unlock state
             end
             default: begin
-                next_state = initials;
+                current_state = initials;
             end
         endcase
     end
