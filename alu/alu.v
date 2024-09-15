@@ -8,10 +8,30 @@ module alu (
     output wire        compare,
     output wire [15:0]  alu_out
 );
-    always @(*) begin
-        if (mode == 0) logik l0 (select, in_a, in_b, alu_out);
-	    else arithmetic a0 (select, in_a, in_b, carry_in, carry_out, alu_out); 
-    end 
+
+
+    wire [15:0] logic_out, arithmetic_out;
+    wire arithmetic_carry_out;
+
+    logik l0 (
+        .select(select),
+        .A(in_a),
+        .B(in_b),
+        .alu_out(logic_out)
+    );
+
+    arithmetic a0 (
+        .select(select),
+        .A(in_a),
+        .B(in_b),
+        .carry_in(carry_in),
+        .carry_out(arithmetic_carry_out),
+        .alu_out(arithmetic_out)
+    );
+
+    assign alu_out = (mode == 0) ? logic_out : arithmetic_out;
+    assign carry_out = (mode == 1) ? arithmetic_carry_out : 1'b0;
+    assign compare = (in_a == in_b);
 
 
 
