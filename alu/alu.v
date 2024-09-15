@@ -10,8 +10,8 @@ module ALU (
 );
     always @(*) begin
         case(mode)
-	    1'b0: arithmetic zero0 (select, in_a, in_b, alu_out);
-	    1'b1: logik one (select, in_a, in_b, alu_out);
+	    1'b0: arithmetic up (select, in_a, in_b, alu_out);
+	    1'b1: logik down (select, in_a, in_b, alu_out);
         endcase 
     end 
 
