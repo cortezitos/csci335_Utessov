@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
         std::cout << "Key entered: " << code[i] << ", Locked state: " << tb->locked << std::endl;
     }
     tb->clk = !tb->clk;
-    tb-eval();
+    tb->eval();
     vcd_trace->dump(60);
 
     if (tb->locked == 0) {
