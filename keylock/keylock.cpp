@@ -33,6 +33,7 @@ int main(int argc, char **argv) {
         tb->clk = !tb->clk;
         tb->key = code[i];  // Send each digit
         tb->eval();         // Evaluate after each input
+        vcd_trace->dump(5 + i*10);
         vcd_trace->dump(i * 10);  // Dump the simulation state after every step (adjust timing as needed)
         std::cout << "Key entered: " << code[i] << ", Locked state: " << tb->locked << std::endl;
         tb->clk = !tb->clk;
