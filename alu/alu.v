@@ -52,11 +52,11 @@ module logik (
 endmodule
 
 module arithmetic (
-    input [3:0] select,    
-    input [15:0] A, B,            
-    input carry_in,        
-    output reg carry_out   
-    output reg [15:0] alu_out,    
+    input wire [3:0] select,    
+    input wire [15:0] A, B,            
+    input wire carry_in,        
+    output wire carry_out,   
+    output wire [15:0] alu_out    
 );
 
 always @(*) begin
