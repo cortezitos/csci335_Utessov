@@ -1,5 +1,6 @@
 #include "Vkeylock.h"
 #include "verilated.h"
+#include "verilated_vcd_c.h"  // Include for VCD tracing
 #include <iostream>
 
 int main(int argc, char **argv) {
@@ -9,9 +10,16 @@ int main(int argc, char **argv) {
     // Instantiate the Verilog module
     Vkeylock *tb = new Vkeylock;
 
+    // Enable waveform tracing
+    Verilated::traceEverOn(true);  // Enable tracing
+    VerilatedVcdC* vcd_trace = new VerilatedVcdC;  // Create trace object
+    tb->trace(vcd_trace, 99);  // Trace 99 levels of hierarchy
+    vcd_trace->open("keylock_trace.vcd");  // Open the VCD file
+
+    // Simulate the reset signal
     tb->reset = 1;  // Assert reset for initialization
     tb->eval();     // Evaluate model
-
+    vcd_trace->dump(0);  // Dump state to the VCD at time 0
     tb->reset = 0;  // Deassert reset
 
     // Simulate the key sequence 335256
@@ -19,6 +27,7 @@ int main(int argc, char **argv) {
     for (int i = 0; i < 6; i++) {
         tb->key = code[i];  // Send each digit
         tb->eval();         // Evaluate after each input
+        vcd_trace->dump(i * 10);  // Dump the simulation state after every step (adjust timing as needed)
         std::cout << "Key entered: " << code[i] << ", Locked state: " << tb->locked << std::endl;
     }
 
@@ -29,8 +38,10 @@ int main(int argc, char **argv) {
     }
 
     // Final cleanup
-    tb->final();
+    vcd_trace->close();  // Close the VCD file
+    tb->final();  // Finish simulation
     delete tb;
+    delete vcd_trace;  // Clean up the trace object
 
     return 0;
 }
