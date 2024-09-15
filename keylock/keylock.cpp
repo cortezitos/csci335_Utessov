@@ -1,4 +1,4 @@
-#include "Vkeylock_fsm.h"
+#include "Vkeylock.h"
 #include "verilated.h"
 #include <iostream>
 
@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
     Verilated::commandArgs(argc, argv);
 
     // Instantiate the Verilog module
-    Vkeylock_fsm *tb = new Vkeylock_fsm;
+    Vkeylock *tb = new Vkeylock;
 
     tb->reset = 1;  // Assert reset for initialization
     tb->eval();     // Evaluate model
