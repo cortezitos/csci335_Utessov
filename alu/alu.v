@@ -10,8 +10,8 @@ module alu (
 );
     always @(*) begin
         case(mode)
-	    1'b1: logik log(select, in_a, in_b, alu_out);
-	    1'b0: arithmetic ari(select, in_a, in_b, carry_in, alu_out, carry_out);
+	    1'b1: alu_out = logik (select, in_a, in_b);
+	    1'b0: alu_out = arithmetic (select, in_a, in_b, carry_in, carry_out);
         endcase 
     end 
 
@@ -55,8 +55,8 @@ module arithmetic (
     input [3:0] select,    
     input [15:0] A, B,            
     input carry_in,        
-    output reg [15:0] alu_out,    
     output reg carry_out   
+    output reg [15:0] alu_out,    
 );
 
 always @(*) begin
