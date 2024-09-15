@@ -18,9 +18,9 @@ module keylock (
     // State register (sequential logic)
     always @(*) begin
         if (reset) begin
-            current_state <= initials;
+            current_state = initials;
         end else begin
-            current_state <= next_state;
+            current_state = next_state;
         end
     end
 
