@@ -23,8 +23,6 @@ int main(int argc, char **argv) {
     vcd_trace->dump(0);  // Dump state to the VCD at time 0
     tb->reset = 0;  // Deassert reset
 
-    tb->clk = !tb->clk;
-
     // Simulate the key sequence 335256
     int code[6] = {3, 3, 5, 2, 5, 6};
     for (int i = 0; i < 6; i++) {
@@ -33,6 +31,8 @@ int main(int argc, char **argv) {
         tb->eval();         // Evaluate after each input
         vcd_trace->dump(i * 10);  // Dump the simulation state after every step (adjust timing as needed)
         std::cout << "Key entered: " << code[i] << ", Locked state: " << tb->locked << std::endl;
+        tb->clk = !tb->clk;
+
     }
     tb->clk = !tb->clk;
     tb->eval();
