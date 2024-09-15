@@ -30,6 +30,7 @@ int main(int argc, char **argv) {
         vcd_trace->dump(i * 10);  // Dump the simulation state after every step (adjust timing as needed)
         std::cout << "Key entered: " << code[i] << ", Locked state: " << tb->locked << std::endl;
     }
+    tb-eval();
 
     if (tb->locked == 0) {
         std::cout << "Unlocked successfully!" << std::endl;
