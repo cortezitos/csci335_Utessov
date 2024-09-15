@@ -51,7 +51,7 @@ module logik (
     end
 endmodule
 
-module Arithmetic_Module (
+module arithmetic (
     input [3:0] select,    
     input [15:0] A, B,            
     input carry_in,        
