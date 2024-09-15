@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 
         // Deassert reset after a few clock cycles
         if (sim_time == 10) {
-            tb->rst = 0;  // Deassert reset
+            tb->reset = 0;  // Deassert reset
         }
 
         // Evaluate the model (tick the clock)
