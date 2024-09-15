@@ -1,4 +1,5 @@
 module keylock (
+    input clk,
     input reset,          // Input reset signal
     input [3:0] key,      // Input key (4-bit to handle numbers 0-9)
     output reg locked     // Output locked signal
@@ -16,11 +17,11 @@ module keylock (
     reg [2:0] current_state, next_state;
 
     // State register (sequential logic)
-    always @(*) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
-            current_state = initials;
+            current_state <= initials;
         end else begin
-            current_state = next_state;
+            current_state <= next_state;
         end
     end
 
