@@ -25,7 +25,7 @@ module keylock (
     end
 
     // Next state logic (combinational logic)
-    always @(*) begin
+    always @(key) begin
         case (current_state)
             initials: begin
                 if (key == 3) next_state = first_three;
