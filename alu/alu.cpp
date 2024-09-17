@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
         tb->carry_in = 0;
         tb->in_a = 15;
         tb->in_b = 23;
-        tb->select= 9;
+        tb->select= 0;
         tb->mode = 0;
 
         std::cout << ": Fibonacci number = " << tb->alu_out << std::endl;
