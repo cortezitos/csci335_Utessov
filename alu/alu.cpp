@@ -18,7 +18,6 @@ int main(int argc, char **argv) {
     tb->rst = 1;  // Assert reset
 
     // Start the simulation loop
-    while (sim_time < max_sim_time) {
         // Toggle the clock
         tb->clk = !tb->clk;
 
@@ -40,7 +39,6 @@ int main(int argc, char **argv) {
 
         // Increment simulation time
         sim_time++;
-    }
 
     // Final cleanup
     tb->final();
