@@ -31,7 +31,7 @@ module alu (
         .alu_out(arithmetic_out)
     );
 
-    assign alu_out = (mode == 0) ? logic_out : arithmetic_out;
+    assign alu_out = (mode == 1) ? logic_out : arithmetic_out;
     assign carry_out = (mode == 1) ? arithmetic_carry_out : 1'b0;
     assign compare = (in_a == in_b);
 
