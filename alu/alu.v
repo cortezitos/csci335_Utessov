@@ -88,7 +88,7 @@ always @(*) begin
         4'b0100: alu_out = A | (A & ~B);
         4'b0101: begin 
             alu_out   = (A | B) + (A & ~B);
-            carry_out = ((A | B) + (A & ~B))[16];
+            carry_out = ((A | B) + (A & ~B))[15];
         end 
         4'b0110: alu_out = A - B - carry_in;
         4'b0111: alu_out = (A & ~B) - carry_in;
