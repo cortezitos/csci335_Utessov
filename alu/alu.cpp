@@ -1,6 +1,7 @@
 #include "Valu.h"
 #include "verilated.h"
 #include <iostream>
+#include "verilated_vcd_c.h"
 
 int main(int argc, char **argv) {
     // Initialize Verilator
