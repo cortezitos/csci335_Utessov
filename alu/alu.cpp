@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
     tb->clk = 0;
     tb->rst = 1;  // Assert reset
 
+    vcd_trace->dump(0);
     // Start the simulation loop
         // Toggle the clock
         tb->clk = !tb->clk;
@@ -36,6 +37,8 @@ int main(int argc, char **argv) {
         tb->mode = 0;
 
         std::cout << ": Fibonacci number = " << tb->alu_out << std::endl;
+
+        vcd_trace->dump(10);
 
         // Increment simulation time
         sim_time++;
