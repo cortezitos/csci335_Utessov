@@ -17,7 +17,7 @@ module alu (
         .select(select),
         .A(in_a),
         .B(in_b),
-        .alu_out(logic_out)
+        .alu_out(alu_out)
     );
 
     arithmetic a0 (
@@ -25,8 +25,8 @@ module alu (
         .A(in_a),
         .B(in_b),
         .carry_in(carry_in),
-        .carry_out(arithmetic_carry_out),
-        .alu_out(arithmetic_out)
+        .carry_out(carry_out),
+        .alu_out(alu_out)
     );
 
     assign alu_out = (mode == 0) ? logic_out : arithmetic_out;
