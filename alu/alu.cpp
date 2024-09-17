@@ -13,6 +13,12 @@ int main(int argc, char **argv) {
     vluint64_t sim_time = 0;  // Simulation time
     const vluint64_t max_sim_time = 1000;  // Maximum simulation time
 
+    Verilated::traceEverOn(true); // Enable waveform tracing. 
+    VerilatedVcdC* vcd_trace = new VerilatedVcdC; 
+    tb->trace(vcd_trace, 99); // Trace 99 levels of hierarchy. 
+    vcd_trace->open("alu_trace.vcd"); // Open the VCD file.
+
+
     // Initialize the clock and reset
     tb->clk = 0;
     tb->rst = 1;  // Assert reset
