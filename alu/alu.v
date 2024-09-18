@@ -80,6 +80,7 @@ module arithmetic (
 );
 
 always @(*) begin
+    carry_out = 1'b0;
     case (select)
         4'b0000: alu_out = A;
         4'b0001: alu_out = A | B;
