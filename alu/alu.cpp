@@ -22,10 +22,10 @@ int main(int argc, char **argv) {
     for (int i = 0; i < 5; i++) {
         
 
-            tb->carry_in = 0;
+            tb->carry_in = 1;
             tb->in_a = 15;
             tb->in_b = 23;
-            tb->select = 0;
+            tb->select = 15;
             tb->mode = 1;
 
 
