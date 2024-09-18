@@ -30,6 +30,11 @@ int main(int argc, char **argv) {
         tb->eval();
 
         std::cout << ": ALU Output = " << tb->alu_out << std::endl;
+        std::cout << ": COut = " << tb->carry_out << std::endl;
+        std::cout << ": Compare = " << tb->compare << std::endl;
+
+
+
 
     // Final cleanup
     tb->final();
