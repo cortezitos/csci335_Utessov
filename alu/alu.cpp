@@ -96,8 +96,8 @@ int main(int argc, char **argv) {
 
 std::cout << "Test " << test_number << " A: " << test_cases[i][0] << " B: " << test_cases[i][1] << " Select: " << test_cases[i][2] << " Mode: " << test_cases[i][3]
                       << " (carry_in = " << carry_in << std::endl << "): ALU Output = " << tb->alu_out << std::endl
-                      << ", COut = " << tb->carry_out << std::endl
-                      << ", Compare = " << tb->compare << std::endl;
+                      << ", COut = " << static_cast<int>(tb->carry_out) << std::endl
+                      << ", Compare = " << static_cast<int>(tb->compare) << std::endl;
         }
     }
 
