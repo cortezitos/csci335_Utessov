@@ -31,6 +31,9 @@ int main(int argc, char **argv) {
 
         // Evaluate the model (tick the clock)
         tb->eval();
+                tb->eval();
+        tb->eval();
+
 
         // Dump trace at each step
         tfp->dump(i);
