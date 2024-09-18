@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
 
     
     // Simulate for a few clock cycles
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 5; i++) {
         
 
             tb->carry_in = 0;
