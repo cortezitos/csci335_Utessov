@@ -1,7 +1,6 @@
 #include "Valu.h"
 #include "verilated.h"
 #include <iostream>
-#include "verilated_vcd_c.h"
 
 int main(int argc, char **argv) {
     // Initialize Verilator
@@ -10,29 +9,15 @@ int main(int argc, char **argv) {
     // Instantiate the Verilog module
     Valu *tb = new Valu;
 
-    // Simulation setup
-    vluint64_t sim_time = 0;  // Simulation time
-    const vluint64_t max_sim_time = 1000;  // Maximum simulation time
-
-    Verilated::traceEverOn(true); // Enable waveform tracing. 
-    VerilatedVcdC* vcd_trace = new VerilatedVcdC; 
-    tb->trace(vcd_trace, 99); // Trace 99 levels of hierarchy. 
-    vcd_trace->open("alu_trace.vcd"); // Open the VCD file.
-
-
     // Initialize the clock and reset
     tb->clk = 0;
     tb->rst = 1;  // Assert reset
 
-    vcd_trace->dump(0);
-    // Start the simulation loop
+   // Start the simulation loop
         // Toggle the clock
         tb->clk = !tb->clk;
 
-        // Deassert reset after a few clock cycles
-        if (sim_time == 10) {
-            tb->rst = 0;  // Deassert reset
-        }
+ 
 
         // Evaluate the model (tick the clock)
         tb->eval();
@@ -45,7 +30,6 @@ int main(int argc, char **argv) {
 
         std::cout << ": Fibonacci number = " << tb->alu_out << std::endl;
 
-        vcd_trace->dump(10);
 
         // Increment simulation time
         sim_time++;
