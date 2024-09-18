@@ -31,9 +31,6 @@ int main(int argc, char **argv) {
         std::cout << ": Fibonacci number = " << tb->alu_out << std::endl;
 
 
-        // Increment simulation time
-        sim_time++;
-
     // Final cleanup
     tb->final();
     delete tb;
