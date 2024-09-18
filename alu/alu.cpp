@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 
         
         std::cout << ": ALU Output = " << tb->alu_out << std::endl;
-        std::cout << ": COut = " << tb->carry_out << std::endl;
+        std::cout << ": COut = " << static_cast<int>(tb->carry_out) << std::endl;
         std::cout << ": Compare = " << static_cast<int>(tb->compare) << std::endl;
 
     }
