@@ -16,24 +16,18 @@ int main(int argc, char **argv) {
     tb->trace(tfp, 99);                       // Trace 99 levels of hierarchy
     tfp->open("dump.vcd");                    // Open the VCD file
 
-    // Initialize the clock and reset
-    tb->clk = 0;
-    tb->rst = 1;  // Assert reset
+
     
     // Simulate for a few clock cycles
     for (int i = 0; i < 2; i++) {
-        // Toggle the clock
-        tb->clk = !tb->clk;
         
-        // Set inputs on every positive clock edge
-        if (tb->clk) {
-            tb->rst = 0;   // Deassert reset after the first cycle
+
             tb->carry_in = 0;
             tb->in_a = 15;
             tb->in_b = 23;
             tb->select = 0;
             tb->mode = 0;
-        }
+
 
         // Evaluate the model (tick the clock)
         tb->eval();
