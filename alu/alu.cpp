@@ -35,7 +35,6 @@ int main(int argc, char **argv) {
     };
 
     for (int i = 0; i < 80; i++) {
-        tb->rst = 0;   // Deassert reset after the first cycle
         tb->carry_in = 0;
         tb->in_a = test_cases[i][0];
         tb->in_b = test_cases[i][1];
