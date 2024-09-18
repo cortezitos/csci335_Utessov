@@ -28,10 +28,9 @@ int main(int argc, char **argv) {
 
         // Evaluate the model (tick the clock)
 
-        std::cout << "Cycle " << i << ": ALU Output = " << tb->alu_out << std::endl;
+        std::cout << ": ALU Output = " << tb->alu_out << std::endl;
 
     // Final cleanup
-    tfp->close();    // Close the VCD file
     tb->final();
 
     return 0;
