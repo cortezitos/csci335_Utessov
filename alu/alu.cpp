@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
         
 
             tb->carry_in = 1;
-            tb->in_a = 15;
+            tb->in_a = 8;
             tb->in_b = 15;
             tb->select = 15;
             tb->mode = 1;
