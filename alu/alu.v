@@ -12,8 +12,8 @@ module alu (
 );
 
     
-    wire [15:0] logic_out, arithmetic_out;
-    wire arithmetic_carry_out;
+    wire reg [15:0] logic_out, arithmetic_out;
+    wire reg arithmetic_carry_out;
 
     logik l0 (
         .select(select),
