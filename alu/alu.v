@@ -88,7 +88,7 @@ always @(*) begin
         4'b0010: alu_out = A | ~B;
         4'b0011: alu_out = -1;
         4'b0100: alu_out = A | (A & ~B);
-        4'b0101: {cary_out, alu_out} = (A | B) + (A & ~B);
+        4'b0101: {carry_out, alu_out} = (A | B) + (A & ~B);
         4'b0110: alu_out = A - B - 1;
         4'b0111: alu_out = (A & ~B) - 1;
         4'b1000: alu_out = A + (A & B);
