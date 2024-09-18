@@ -35,18 +35,21 @@ int main(int argc, char **argv) {
     };
 
     for (int i = 0; i < 80; i++) {
-        tb->carry_in = 0;
-        tb->in_a = test_cases[i][0];
-        tb->in_b = test_cases[i][1];
-        tb->select = test_cases[i][2];
-        tb->mode = test_cases[i][3];
+        for(int j = 0; j < 2; j++){
+            tb->carry_in = j;
+            tb->in_a = test_cases[i][0];
+            tb->in_b = test_cases[i][1];
+            tb->select = test_cases[i][2];
+            tb->mode = test_cases[i][3];
 
-        // Evaluate the model (tick the clock)
-        tb->eval();
-
-        std::cout << "Test " << i + 1 << ": ALU Output = " << tb->alu_out << std::endl
-                  << ", COut = " << static_cast<int>(tb->carry_out) << std::endl
-                  << ", Compare = " << static_cast<int>(tb->compare) << std::endl;
+            // Evaluate the model (tick the clock)
+            tb->eval();
+    
+            std::cout << "Test " << i + 1 << "A: " << test_cases[i][0] << "B: " << test_cases[i][1] << "Select: " << test_cases[i][2] << "Mode: " << test_cases[i][3]
+                    << ": ALU Output = " << tb->alu_out << std::endl
+                    << ", COut = " << static_cast<int>(tb->carry_out) << std::endl
+                    << ", Compare = " << static_cast<int>(tb->compare) << std::endl;
+        }
     }
 
     // Final cleanup
