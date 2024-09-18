@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
             int test_number = i * 2 + carry_idx + 1;
 
 std::cout << "Test " << test_number << " A: " << test_cases[i][0] << " B: " << test_cases[i][1] << " Select: " << test_cases[i][2] << " Mode: " << test_cases[i][3]
-                      << " (carry_in = " << carry_in << std::endl << "): ALU Output = " << tb->alu_out << std::endl
+                      << " (carry_in = " << carry_in << ")" << std::endl << "ALU Output = " << tb->alu_out << std::endl
                       << ", COut = " << static_cast<int>(tb->carry_out) << std::endl
                       << ", Compare = " << static_cast<int>(tb->compare) << std::endl;
         }
