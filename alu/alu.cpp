@@ -27,6 +27,7 @@ int main(int argc, char **argv) {
             tb->mode = 0;
 
         // Evaluate the model (tick the clock)
+        tb->eval();
 
         std::cout << ": ALU Output = " << tb->alu_out << std::endl;
 
