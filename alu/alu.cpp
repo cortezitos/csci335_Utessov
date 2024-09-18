@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
             tb->in_a = 15;
             tb->in_b = 23;
             tb->select = 0;
-            tb->mode = 0;
+            tb->mode = 1;
 
 
         // Evaluate the model (tick the clock)
