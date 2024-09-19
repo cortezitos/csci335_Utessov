@@ -29,9 +29,10 @@ int main(int argc, char **argv) {
         tb->key = code[i];  
         tb->eval();        
         vcd_trace->dump(i * 10);  
-        std::cout << "Key entered: " << code[i] << ", Locked state: " << static_cast<int>(tb->locked) << std::endl;
         tb->clk = !tb->clk;
         tb->eval();
+        std::cout << "Key entered: " << code[i] << ", Locked state: " << static_cast<int>(tb->locked) << std::endl;
+
     }
     tb->clk = !tb->clk;
     tb->eval();
