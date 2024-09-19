@@ -23,16 +23,15 @@ int main(int argc, char **argv) {
     tb->eval();
     tb->clk = !tb->clk;
     tb->eval();
-    int code[6] = {3, 3, 5, 2, 5, 6};
+    int code[6] = {3, 3, 5, 2, 5, 7};
     for (int i = 0; i < 6; i++) {
         tb->clk = !tb->clk;
         tb->key = code[i];  
         tb->eval();        
         vcd_trace->dump(i * 10);  
+        std::cout << "Key entered: " << code[i] << ", Locked state: " << static_cast<int>(tb->locked) << std::endl;
         tb->clk = !tb->clk;
         tb->eval();
-        std::cout << "Key entered: " << code[i] << ", Locked state: " << static_cast<int>(tb->locked) << std::endl;
-
     }
     tb->clk = !tb->clk;
     tb->eval();
