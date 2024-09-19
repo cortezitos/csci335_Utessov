@@ -1,39 +1,34 @@
 #include "Vkeylock.h"
 #include "verilated.h"
-#include "verilated_vcd_c.h"  // Include for VCD tracing
+#include "verilated_vcd_c.h"  
 #include <iostream>
 
 int main(int argc, char **argv) {
-    // Initialize Verilator
     Verilated::commandArgs(argc, argv);
 
-    // Instantiate the Verilog module
     Vkeylock *tb = new Vkeylock;
 
-    // Enable waveform tracing
-    Verilated::traceEverOn(true);  // Enable tracing
-    VerilatedVcdC* vcd_trace = new VerilatedVcdC;  // Create trace object
-    tb->trace(vcd_trace, 99);  // Trace 99 levels of hierarchy
-    vcd_trace->open("keylock_trace.vcd");  // Open the VCD file
+    Verilated::traceEverOn(true);  
+    VerilatedVcdC* vcd_trace = new VerilatedVcdC;  
+    tb->trace(vcd_trace, 99);  
+    vcd_trace->open("keylock_trace.vcd");  
 
-    // Simulate the reset signal
     tb->clk = 0;
-    tb->reset = 1;  // Assert reset for initialization
-    tb->eval();     // Evaluate model
-    vcd_trace->dump(0);  // Dump state to the VCD at time 0
-    tb->reset = 0;  // Deassert reset
+    tb->reset = 1;  
+    tb->eval();    
+    vcd_trace->dump(0);  
+    tb->reset = 0;  
 
     tb->clk = !tb->clk;
     tb->eval();
     tb->clk = !tb->clk;
     tb->eval();
-    // Simulate the key sequence 335256
-    int code[6] = {3, 3, 5, 2, 5, 7};
+    int code[6] = {3, 3, 5, 2, 5, 6};
     for (int i = 0; i < 6; i++) {
         tb->clk = !tb->clk;
-        tb->key = code[i];  // Send each digit
-        tb->eval();         // Evaluate after each input
-        vcd_trace->dump(i * 10);  // Dump the simulation state after every step (adjust timing as needed)
+        tb->key = code[i];  
+        tb->eval();        
+        vcd_trace->dump(i * 10);  
         std::cout << "Key entered: " << code[i] << ", Locked state: " << static_cast<int>(tb->locked) << std::endl;
         tb->clk = !tb->clk;
         tb->eval();
@@ -48,11 +43,8 @@ int main(int argc, char **argv) {
         std::cout << "Failed to unlock." << std::endl;
     }
 
-    // Final cleanup
-    vcd_trace->close();  // Close the VCD file
-    tb->final();  // Finish simulation
-    delete tb;
-    delete vcd_trace;  // Clean up the trace object
+    vcd_trace->close();  
+    tb->final();  
 
     return 0;
 }
