@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     tb->clk = !tb->clk;
     tb->eval();
     // Simulate the key sequence 335256
-    int code[6] = {3, 3, 5, 2, 5, 6};
+    int code[6] = {3, 3, 5, 2, 5, 7};
     for (int i = 0; i < 6; i++) {
         tb->clk = !tb->clk;
         tb->key = code[i];  // Send each digit
