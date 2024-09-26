@@ -29,9 +29,9 @@ int main(int argc, char **argv) {
     tb->eval();
 
 std::cout << "Test " << test_number << " A: " << a << " B: " << b << " Select: " << select << " Mode: " << mode
-                      << " (carry_in = " << carry_in << ")" << std::endl << "ALU Output = " << tb->alu_out << " " << tb->alu_out == out[0] << std::endl
-                      << "COut = " << static_cast<int>(tb->carry_out) << " " << static_cast<int>(tb->carry_out) == out[1] << std::endl
-                      << "Compare = " << static_cast<int>(tb->compare) << " " << static_cast<int>(tb->compare) == out[2] << std::endl;
+                      << " (carry_in = " << carry_in << ")" << std::endl << "ALU Output = " << tb->alu_out << " " << (tb->alu_out == out[0]) << std::endl
+                      << "COut = " << static_cast<int>(tb->carry_out) << " " << (static_cast<int>(tb->carry_out) == out[1]) << std::endl
+                      << "Compare = " << static_cast<int>(tb->compare) << " " << (static_cast<int>(tb->compare) == out[2]) << std::endl;
 
 
     // Final cleanup
