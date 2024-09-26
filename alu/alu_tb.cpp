@@ -43,7 +43,7 @@ std::cout << "Test " << test_number << " A: " << a << " B: " << b << " Select: "
     return 0;
 }
 
-void alu(int a, int b, int sel, int mode, int carry_in, int[3] out){
+void alu(int a, int b, int sel, int mode, int carry_in, int out[]){
     out[1] = 0;
     out[2] = (a == b);
     switch(mode){
