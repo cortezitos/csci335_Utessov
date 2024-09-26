@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     int carry_in = 0;
     int select = 9;
     int mode = 0;
-    int out[] = [0, 0, 0];
+    int out[3] = [0, 0, 0];
 
     tb->carry_in = carry_in;
     tb->in_a = a;
