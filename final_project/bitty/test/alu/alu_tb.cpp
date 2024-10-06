@@ -28,7 +28,6 @@ int main(int argc, char **argv) {
 
     std::cout << " A: " << a << " B: " << b 
               << " Select: " << select << " Mode: " << mode
-              << " (carry_in = " << carry_in << ")" 
               << std::endl 
               << "ALU Output = " << tb->alu_out 
               << " (Expected = " << out[0] << ") "
