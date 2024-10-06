@@ -3,7 +3,7 @@
 #include <iostream>
 #include <array> 
 
-void alu(int a, int b, int sel, int mode, int carry_in, int out[]);
+void alu(int a, int b, int sel, int mode, int out[]);
 
 int main(int argc, char **argv) {
     Verilated::commandArgs(argc, argv);
