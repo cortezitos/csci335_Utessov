@@ -76,7 +76,7 @@ module arithmetic (
             4'b0010: alu_out = A | ~B;
             4'b0011: alu_out = -1;
             4'b0100: alu_out = A | (A & ~B);
-            4'b0105: {carry_out, alu_out} = {1'b0, (A | B)} + {1'b0, (A & ~B)};
+            4'b0101: {carry_out, alu_out} = {1'b0, (A | B)} + {1'b0, (A & ~B)};
             4'b0110: alu_out = A - B - 1;
             4'b0111: alu_out = (A & ~B) - 1;
             4'b1000: {carry_out, alu_out} = {1'b0, A} + {1'b0, (A & B)};
