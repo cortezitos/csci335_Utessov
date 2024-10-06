@@ -12,8 +12,8 @@ int main(int argc, char **argv) {
 
     int a = 47;
     int b = 59;
-    int select = 4;
-    int mode = 1;
+    int select = 8;
+    int mode = 0;
 
     int out[3] = {0, 0, 0};
 
