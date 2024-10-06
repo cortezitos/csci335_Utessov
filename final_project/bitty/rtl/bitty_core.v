@@ -34,7 +34,6 @@ module bitty_core (
     );
 
     alu alu (
-        .carry_in(1'b0),
         .in_a(reg_s_out),
         .in_b(mux_out),
         .select(sel),
