@@ -10,11 +10,10 @@ int main(int argc, char **argv) {
 
     Valu *tb = new Valu;
 
-    int a = 12;
-    int b = 13;
-    int carry_in = 0;
-    int select = 9;
-    int mode = 0;
+    int a = 47;
+    int b = 59;
+    int select = 4;
+    int mode = 1;
 
     int out[3] = {0, 0, 0};
 
