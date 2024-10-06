@@ -11,7 +11,7 @@ module alu (
     wire [15:0] logic_out, arithmetic_out;
     wire arithmetic_carry_out;
 
-    logic l (
+    logical l (
         .select(select),
         .A(in_a),
         .B(in_b),
@@ -32,7 +32,7 @@ module alu (
 
 endmodule
 
-module logic (
+module logical (
     input wire [3:0] select, 
     input wire [15:0] A, B, 
     output reg [15:0] alu_out
