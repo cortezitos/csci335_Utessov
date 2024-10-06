@@ -22,9 +22,8 @@ int main(int argc, char **argv) {
     tb->in_b = b;
     tb->select = select;
     tb->mode = mode;
-    tb->carry_in = carry_in;
 
-    alu(a, b, select, mode, carry_in, out);
+    alu(a, b, select, mode, out);
 
     tb->eval();
 
@@ -53,9 +52,9 @@ int main(int argc, char **argv) {
 }
 
 
-void alu(int a, int b, int sel, int mode, int carry_in, int out[]) {
-    out[1] = 0;          // Default carry_out
-    out[2] = (a == b);   // Compare result
+void alu(int a, int b, int sel, int mode, int out[]) {
+    out[1] = 0;          
+    out[2] = (a == b);   
 
     switch (mode) {
     case 0: // Arithmetic mode
