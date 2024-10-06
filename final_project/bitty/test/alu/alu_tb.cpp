@@ -29,9 +29,9 @@ int main(int argc, char **argv) {
     std::cout << " A: " << a << " B: " << b 
               << " Select: " << select << " Mode: " << mode
               << std::endl 
-              << "ALU Output = " << tb->alu_out 
+              << "ALU Output = " << static_cast<int>(tb->alu_out)
               << " (Expected = " << out[0] << ") "
-              << (static_cast<int>->alu_out == out[0] ? "PASS" : "FAIL")
+              << (static_cast<int>(tb->alu_out) == out[0] ? "PASS" : "FAIL")
               << std::endl
               << "Carry Out = " << static_cast<int>(tb->carry_out) 
               << " (Expected = " << out[1] << ") "
