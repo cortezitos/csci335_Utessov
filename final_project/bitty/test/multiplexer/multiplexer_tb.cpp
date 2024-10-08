@@ -2,7 +2,7 @@
 #include "verilated.h"
 #include <iostream>
 
-void multiplexer_select(Vmultiplexer *tb, uint16_t d_in, uint16_t reg_0, uint16_t reg_1, uint16_t reg_2, uint16_t reg_3, uint16_t reg_4, uint16_t reg_5, uint16_t reg_6, uint16_t reg_7, uint8_t mux_sel) {
+void multiplexer_select(Vmultiplexer *tb, int d_in, int reg_0, int reg_1, int reg_2, int reg_3, int reg_4, int reg_5, int reg_6, int reg_7, uint8_t mux_sel) {
     tb->d_in = d_in;
     tb->reg_0 = reg_0;
     tb->reg_1 = reg_1;
