@@ -23,6 +23,7 @@ int main(int argc, char **argv) {
     Vregister *tb = new Vregister;
 
     tb->clk = 0;
+    toggle_clock(tb);
 
     std::cout << "Test 1: Reset the register\n";
     register_load(tb, 0, false, true);
