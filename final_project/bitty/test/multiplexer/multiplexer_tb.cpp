@@ -22,11 +22,11 @@ int main(int argc, char **argv) {
     Vmultiplexer *tb = new Vmultiplexer;
 
     std::cout << "Test 1: Select d_in (mux_sel = 0)\n";
-    multiplexer_select(tb, 1, 2, 3, 4, 5, 6, 7, 8, 0);
+    multiplexer_select(tb, 25, 0, 1, 2, 3, 4, 5, 6, 7, 0);
     std::cout << "d_out = " << tb->d_out << " (Expected = 1)\n";
 
     std::cout << "Test 2: Select reg_3 (mux_sel = 3)\n";
-    multiplexer_select(tb, 1, 2, 3, 4, 5, 6, 7, 8, 3);
+    multiplexer_select(tb, 25, 0, 1, 2, 3, 4, 5, 6, 7, 3);
     std::cout << "d_out = " << tb->d_out << " (Expected = 4)\n";
 
     tb->final();
