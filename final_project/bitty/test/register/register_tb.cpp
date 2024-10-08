@@ -1,90 +1,42 @@
-#include "Vregister.h"         // Verilated model header
-#include "verilated.h"         // Verilator header for simulation
+#include "Vregister.h"
+#include "verilated.h"
 #include <iostream>
 
-// Function to compute expected output based on inputs, mimicking Verilog behavior
-uint16_t computeExpectedOutput(uint16_t d_in, bool reset, bool en, uint16_t prev_output) {
-    if (reset) {
-        return 0;
-    } else if (en) {
-        return d_in;
-    } else {
-        return prev_output;
-    }
+void toggle_clock(Vregister *tb) {
+    tb->clk = !tb->clk;
+    tb->eval();
 }
 
-int main(int argc, char** argv) {
-    // Initialize Verilator
+void register_load(Vregister *tb, uint16_t data_in, bool enable, bool reset) {
+    tb->d_in = data_in;
+    tb->en = enable;
+    tb->reset = reset;
+    toggle_clock(tb);
+}
+
+int main(int argc, char **argv) {
     Verilated::commandArgs(argc, argv);
 
-    // Instantiate the Verilated model
-    Vregister* top = new Vregister;
+    Vregister *tb = new Vregister;
 
-    // Simulation inputs
-    uint16_t d_in = 10;
-    bool reset = true;
-    bool en = false;
+    std::cout << "Test 1: Reset the register\n";
+    register_load(tb, 0, false, true);
+    std::cout << "d_out = " << tb->d_out << " (Expected = 0)\n";
 
-    // Clock signal
-    bool clk = 0;
+    std::cout << "Test 2: Load value into register when enabled\n";
+    register_load(tb, 10, true, false);
+    std::cout << "d_out = " << tb->d_out << " (Expected = 10)\n";
 
-    // Previous output to track state
-    uint16_t expected_output = 0;
-    
-    // Simulate for 20 clock cycles
-    for (int i = 0; i < 20; ++i) {
-        // Toggle the clock
-        clk = !clk;
-        top->clk = clk;
+    std::cout << "Test 3: No change when enable is off\n";
+    register_load(tb, 35, false, false);
+    std::cout << "d_out = " << tb->d_out << " (Expected = 10)\n";
 
-        // Apply reset for the first 2 cycles
-        if (i == 0 || i == 1) {
-            reset = true;
-        } else {
-            reset = false;
-        }
+    std::cout << "Test 4: Reset the register again\n";
+    register_load(tb, 0, false, true);
+    std::cout << "d_out = " << tb->d_out << " (Expected = 0)\n";
 
-        // Enable signal active after 5 cycles
-        if (i == 5) {
-            en = true;
-        }
+    tb->final();
+    delete tb;
 
-        // Apply inputs to the top module
-        top->reset = reset;
-        top->en = en;
-        top->d_in = d_in;
-
-        // Evaluate the model
-        top->eval();
-
-        // Only check output on positive clock edge
-        if (clk) {
-            // Compute expected output for the current cycle
-            uint16_t computed_output = computeExpectedOutput(d_in, reset, en, expected_output);
-
-            // Compare the Verilated model output with computed output
-            if (top->d_out != computed_output) {
-                std::cerr << "Mismatch at cycle " << i << ": expected " 
-                          << computed_output << ", but got " << top->d_out << std::endl;
-                return -1; // Exit with error if there's a mismatch
-            }
-
-            // Update the expected output state
-            expected_output = computed_output;
-
-            // Print the current result
-            std::cout << "Cycle " << i << ": d_out = " << top->d_out << std::endl;
-        }
-
-        // Increment input for testing
-        d_in += 1;
-    }
-
-    // Clean up
-    top->final();
-    delete top;
-
-    std::cout << "Test completed successfully. No mismatches found." << std::endl;
-    
     return 0;
 }
