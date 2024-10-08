@@ -2,7 +2,7 @@
 #include "verilated.h"
 #include <iostream>
 
-void toggle_clock(Vregister *tb) {
+void toggle_clock(Vcontrol_unit *tb) {
     tb->clk = !tb->clk;
     tb->eval();
 }
