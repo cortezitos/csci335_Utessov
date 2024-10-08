@@ -25,15 +25,15 @@ int main(int argc, char **argv) {
 
     std::cout << "Test 1: Reset\n";
     control_unit_test(tb, 0, false, true);
-    std::cout << "en_s = " << tb->en_s << " en_c = " << tb->en_c << " (Expected: 0 0)\n";
+    std::cout << "en_s = " << static_cast<int>(tb->en_s) << " en_c = " << static_cast<int>(tb->en_c) << " (Expected: 0 0)\n";
 
     std::cout << "Test 2: Run with instruction\n";
     control_unit_test(tb, 0xC123, true, false);
-    std::cout << "mux_sel = " << tb->mux_sel << " en_s = " << tb->en_s << " (Expected: 6 1)\n";
+    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_s = " << static_cast<int>(tb->en_s) << " (Expected: 6 1)\n";
 
     std::cout << "Test 3: Continue run\n";
     control_unit_test(tb, 0xC123, true, false);
-    std::cout << "mux_sel = " << tb->mux_sel << " en_c = " << tb->en_c << " sel = " << tb->sel << " mode = " << tb->mode << " (Expected: 1 1 2 1)\n";
+    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_c = " << static_cast<int>(tb->en_c) << " sel = " << static_cast<int>(tb->sel) << " mode = " << static_cast<int>(tb->mode) << " (Expected: 1 1 2 1)\n";
 
     tb->final();
     delete tb;
