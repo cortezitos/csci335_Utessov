@@ -7,7 +7,7 @@ void toggle_clock(Vregister *tb) {
     tb->eval();
 }
 
-void register_load(Vregister *tb, uint16_t data_in, bool enable, bool reset) {
+void register_load(Vregister *tb, int data_in, bool enable, bool reset) {
         toggle_clock(tb);
 
     tb->d_in = data_in;
