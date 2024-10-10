@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     tb->clk = 0;
     tb->instruction = 0x4721;
     tb->reset = 0;
-    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_s = " << static_cast<int>(tb->en_s) << " (Expected: 2 1)\n";
+    tb->run = 1;
 
     toggle_clock(tb);
 
@@ -25,8 +25,6 @@ int main(int argc, char **argv) {
     std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_s = " << static_cast<int>(tb->en_s) << " (Expected: 2 1)\n";
 
     toggle_clock(tb);
-        std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_s = " << static_cast<int>(tb->en_s) << " (Expected: 2 1)\n";
-
     toggle_clock(tb);
 
     std::cout << "Test 2: Instruction i = 1\n";
