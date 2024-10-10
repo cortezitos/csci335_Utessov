@@ -15,9 +15,6 @@ int main(int argc, char **argv) {
     Vcontrol_unit *tb = new Vcontrol_unit;
 
     tb->clk = 0;
-    toggle_clock(tb);
-    toggle_clock(tb);
-
     tb->instruction = 0x4721;
     tb->reset = 0;
 
