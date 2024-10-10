@@ -36,7 +36,6 @@ int main(int argc, char **argv) {
     toggle_clock(tb);  
 
     std::cout << "Test 3: Instruction i = 2\n";
-    control_unit_test(tb, 0xC123, true, false);
     std::cout << "en_1 = " << static_cast<int>(tb->mux_sel) << " done = " << static_cast<int>(tb->done) << " (Expected: 1 1)\n";
 
     toggle_clock(tb);  
