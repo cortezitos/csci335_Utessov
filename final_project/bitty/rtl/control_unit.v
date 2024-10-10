@@ -61,7 +61,7 @@ module control_unit (
                     endcase
                     i <= 0;
                     done <= 1;
-                2'd3: i = 0;
+                2'd3: i <= 0;
                 end
             endcase
         end
