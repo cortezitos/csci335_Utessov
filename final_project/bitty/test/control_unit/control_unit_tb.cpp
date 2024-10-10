@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     toggle_clock(tb);
 
     std::cout << "Test 3: Instruction i = 2\n";
-    std::cout << "en_1 = " << static_cast<int>(tb->en_1) << " done = " << static_cast<int>(tb->done) << " (Expected: 1 1)\n";
+    std::cout << "en_2 = " << static_cast<int>(tb->en_2) << " done = " << static_cast<int>(tb->done) << " (Expected: 1 1)\n";
 
     tb->final();
     delete tb;
