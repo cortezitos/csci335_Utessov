@@ -62,7 +62,7 @@ module control_unit (
                     i <= 0;
                     done <= 1;
                 end
-                default: i = 0;
+                default: i <= 0;
             endcase
         end
     end
