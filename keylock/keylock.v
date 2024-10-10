@@ -61,7 +61,6 @@ module keylock (
         endcase
     end
 
-    // Output logic (combinational logic)
     always @(*) begin
         case (current_state)
             unlock: begin

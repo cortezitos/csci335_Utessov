@@ -7,13 +7,7 @@ void toggle_clock(Vcontrol_unit *tb) {
     tb->eval();
 }
 
-void control_unit_test(Vcontrol_unit *tb, uint16_t instruction, bool run, bool reset) {
-    toggle_clock(tb);
-    tb->instruction = instruction;
-    tb->run = run;
-    tb->reset = reset;
-    toggle_clock(tb);
-}
+
 
 int main(int argc, char **argv) {
     Verilated::commandArgs(argc, argv);
@@ -22,18 +16,30 @@ int main(int argc, char **argv) {
 
     tb->clk = 0;
     toggle_clock(tb);
+    toggle_clock(tb);
 
-    std::cout << "Test 1: Reset\n";
-    control_unit_test(tb, 0, false, true);
-    std::cout << "en_s = " << static_cast<int>(tb->en_s) << " en_c = " << static_cast<int>(tb->en_c) << " (Expected: 0 0)\n";
+    tb->instruction = 0x4721;
+    tb->reset = 0;
 
-    std::cout << "Test 2: Run with instruction\n";
+    toggle_clock(tb);
+
+    std::cout << "Test 1: Instruction i = 0\n";
+    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_s = " << static_cast<int>(tb->en_s) << " (Expected: 2 1)\n";
+
+    toggle_clock(tb);
+    toggle_clock(tb);
+
+    std::cout << "Test 2: Instruction i = 1\n";
+    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_c = " << static_cast<int>(tb->en_s) << " alu_sel = " << static_cast<int>(tb->sel) << " alu_mode = " << static_cast<int>(tb->mode) << " (Expected: 1 1 4 0)\n";
+
+    toggle_clock(tb);
+    toggle_clock(tb);  
+
+    std::cout << "Test 3: Instruction i = 2\n";
     control_unit_test(tb, 0xC123, true, false);
-    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_s = " << static_cast<int>(tb->en_s) << " (Expected: 6 1)\n";
+    std::cout << "en_1 = " << static_cast<int>(tb->mux_sel) << " done = " << static_cast<int>(tb->done) << " (Expected: 1 1)\n";
 
-    std::cout << "Test 3: Continue run\n";
-    control_unit_test(tb, 0xC123, true, false);
-    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_c = " << static_cast<int>(tb->en_c) << " sel = " << static_cast<int>(tb->sel) << " mode = " << static_cast<int>(tb->mode) << " (Expected: 1 1 2 1)\n";
+    toggle_clock(tb);  
 
     tb->final();
     delete tb;
