@@ -50,17 +50,17 @@ module control_unit (
                 end
                 2'd2: begin
                     case(instruction[15:13])
-                        3'd0: en_0 <= 1;
-                        3'd1: en_1 <= 1;
-                        3'd2: en_2 <= 1;
-                        3'd3: en_3 <= 1;
-                        3'd4: en_4 <= 1;
-                        3'd5: en_5 <= 1;
-                        3'd6: en_6 <= 1;
-                        3'd7: en_7 <= 1;
+                        3'd0: en_0 = 1;
+                        3'd1: en_1 = 1;
+                        3'd2: en_2 = 1;
+                        3'd3: en_3 = 1;
+                        3'd4: en_4 = 1;
+                        3'd5: en_5 = 1;
+                        3'd6: en_6 = 1;
+                        3'd7: en_7 = 1;
                     endcase
                     i <= 0;
-                    done <= 1;
+                    done = 1;
                 end
                 default: i <= 0;
             endcase
