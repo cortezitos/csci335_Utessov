@@ -216,7 +216,7 @@ module multiplexer (
     input  wire [15:0] reg_5,
     input  wire [15:0] reg_6,
     input  wire [15:0] reg_7,
-    input  wire  [3:0] mux_sel,
+    input  wire  [2:0] mux_sel,
     output reg  [15:0] d_out
 );
 
