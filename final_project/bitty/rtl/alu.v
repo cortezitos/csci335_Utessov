@@ -3,9 +3,9 @@ module alu (
     input  wire [15:0] in_b,
     input  wire [3:0]  select,
     input  wire        mode,
-    output wire        carry_out,
-    output wire        compare,
-    output wire [15:0] alu_out
+    output reg        carry_out,
+    output reg        compare,
+    output reg [15:0] alu_out
 );
 
 
