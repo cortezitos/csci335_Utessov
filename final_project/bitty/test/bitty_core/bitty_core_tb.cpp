@@ -24,7 +24,6 @@ int main(int argc, char **argv) {
     toggle_clock(tb);
 
     std::cout << "Test 1: Instruction i = 0\n";
-    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_s = " << static_cast<int>(tb->en_s) << " (Expected: 2 1)\n";
 
     toggle_clock(tb);
     toggle_clock(tb);
