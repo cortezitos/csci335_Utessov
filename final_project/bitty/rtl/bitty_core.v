@@ -207,7 +207,6 @@ module alu (
 endmodule
 
 module multiplexer (
-    input  wire [15:0] d_in,
     input  wire [15:0] reg_0,
     input  wire [15:0] reg_1,
     input  wire [15:0] reg_2,
