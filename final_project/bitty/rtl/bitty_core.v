@@ -91,7 +91,7 @@ module control_unit (
 
     reg [1:0] i = 0;
 
-    always @(posedge clk or posedge reset) begin
+    always @(posedge clk) begin
         if (reset) begin
             i <= 0;
             en_s <= 0;
@@ -239,7 +239,7 @@ endmodule
 
 module register (
     input  wire [15:0] d_in,
-    input  reg        reset,
+    input  wire        reset,
     input  wire        clk,
     input  wire        en,
     output reg  [15:0] d_out
