@@ -49,7 +49,6 @@ module bitty_core (
 
 
     multiplexer mux (
-        .d_in(reg_c_out),
         .reg_0(reg_0_out), .reg_1(reg_1_out), .reg_2(reg_2_out), .reg_3(reg_3_out),
         .reg_4(reg_4_out), .reg_5(reg_5_out), .reg_6(reg_6_out), .reg_7(reg_7_out),
         .mux_sel(mux_sel),
