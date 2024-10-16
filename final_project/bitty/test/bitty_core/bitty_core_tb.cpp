@@ -1,5 +1,4 @@
 #include "Vbitty_core.h"
-#include "Vcontrol_unit.h"
 #include "verilated.h"
 #include <iostream>
 
