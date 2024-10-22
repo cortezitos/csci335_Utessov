@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     toggle_clock(tb);
     toggle_clock(tb);
 
-    std::cout << "Test 1: Instruction i = 0\n";
+    std::cout << "Test 1: Instruction i = 0" << "reg_0_out = " << static_cast<int>(tb->reg_0_out) << "\n";
 
     toggle_clock(tb);
     toggle_clock(tb);
@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
     toggle_clock(tb);
 
     std::cout << "Test 3: Instruction i = 2\n";
-    std::cout << "en_2 = " << static_cast<int>(tb->reg_0_out);
+    std::cout << "reg_0_out = " << static_cast<int>(tb->reg_0_out);
 
     tb->final();
     delete tb;
