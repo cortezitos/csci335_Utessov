@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     toggle_clock(tb);
     toggle_clock(tb);
 
-    std::cout << "Test 1: Instruction i = 0" << "reg_0_out = " << static_cast<int>(tb->reg_0_out) << "\n";
+    std::cout << "reg_0_out = " << static_cast<int>(tb->reg_0_out) << "\n";
 
     toggle_clock(tb);
     toggle_clock(tb);
