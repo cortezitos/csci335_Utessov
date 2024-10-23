@@ -33,13 +33,14 @@ int main(int argc, char **argv) {
 
 
     std::cout << "Test 2: Instruction i = 1\n";
-    std::cout << "mux_sel = " << static_cast<int>(tb->reg_c_out) << "\n";
+    std::cout << "reg_c_out = " << static_cast<int>(tb->reg_c_out) << "\n";
 
     toggle_clock(tb);
     toggle_clock(tb);  
     toggle_clock(tb);
 
     std::cout << "Test 3: Instruction i = 2\n";
+    std::cout << "reg_c_out = " << static_cast<int>(tb->reg_c_out) << "\n";
     std::cout << "reg_0_out = " << static_cast<int>(tb->reg_0_out);
     std::cout << "reg_1_out = " << static_cast<int>(tb->reg_1_out) << "\n";
 
