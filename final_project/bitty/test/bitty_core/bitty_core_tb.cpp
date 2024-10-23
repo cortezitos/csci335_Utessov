@@ -41,11 +41,12 @@ int main(int argc, char **argv) {
     std::cout << "reg_0_out = " << static_cast<int>(tb->reg_0_out);
     std::cout << "reg_1_out = " << static_cast<int>(tb->reg_1_out) << "\n";
 
-    toggle_clock(tb);
     toggle_clock(tb);  
     toggle_clock(tb);
 
         std::cout << "Test 4: Instruction i = 3\n";
+            std::cout << "reg_c_out = " << static_cast<int>(tb->reg_c_out) << "\n";
+
     std::cout << "reg_0_out = " << static_cast<int>(tb->reg_0_out);
     std::cout << "reg_1_out = " << static_cast<int>(tb->reg_1_out) << "\n";
 
