@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     Vbitty_core *tb = new Vbitty_core;
 
     tb->clk = 0;
-    tb->instruction = 0b0010100001100100;
+    tb->instruction = 0b001010000110100;
     tb->reset = 0;
     tb->run = 1;
 
