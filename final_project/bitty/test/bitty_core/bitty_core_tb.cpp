@@ -24,6 +24,8 @@ int main(int argc, char **argv) {
 
     std::cout << "reg_0_out = " << static_cast<int>(tb->reg_0_out) << "\n";
     std::cout << "reg_1_out = " << static_cast<int>(tb->reg_1_out) << "\n";
+    std::cout << "reg_s_out = " << static_cast<int>(tb->reg_s_out) << "\n";
+
 
 
     toggle_clock(tb);

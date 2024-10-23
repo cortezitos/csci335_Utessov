@@ -6,9 +6,11 @@ module bitty_core (
     output wire done,
     output reg [15:0] reg_c_out,
     output reg [15:0] reg_0_out,
-    output reg [15:0] reg_1_out
+    output reg [15:0] reg_1_out,
+    output reg [15:0] reg_s_out
+
 );
-    wire [15:0] alu_out, mux_out, reg_s_out;
+    wire [15:0] alu_out, mux_out;
     wire carry_out, compare;
     wire [3:0] sel;
     wire [2:0] mux_sel;
