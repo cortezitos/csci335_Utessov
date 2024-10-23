@@ -15,11 +15,10 @@ int main(int argc, char **argv) {
     Vbitty_core *tb = new Vbitty_core;
 
     tb->clk = 0;
-    tb->instruction = 0b0010100001001000;
+    tb->instruction = 0b0000010001001000;
     tb->reset = 0;
     tb->run = 1;
 
-    toggle_clock(tb);
     toggle_clock(tb);
     toggle_clock(tb);
 
@@ -29,7 +28,6 @@ int main(int argc, char **argv) {
 
     toggle_clock(tb);
     toggle_clock(tb);
-    toggle_clock(tb);
 
 
     std::cout << "Test 2: Instruction i = 1\n";
@@ -37,7 +35,6 @@ int main(int argc, char **argv) {
 
     toggle_clock(tb);
     toggle_clock(tb);  
-    toggle_clock(tb);
 
     std::cout << "Test 3: Instruction i = 2\n";
     std::cout << "reg_c_out = " << static_cast<int>(tb->reg_c_out) << "\n";
