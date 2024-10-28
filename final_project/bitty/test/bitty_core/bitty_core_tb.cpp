@@ -33,6 +33,8 @@ int main(int argc, char **argv) {
     toggle_clock(tb);
     toggle_clock(tb);
     toggle_clock(tb);
+        toggle_clock(tb);
+    toggle_clock(tb);
 
 
     std::cout << "Test 3: Instruction i = 2\n";
