@@ -254,7 +254,7 @@ module register (
     output reg  [15:0] d_out
 );
 
-    always @(posedge clk) begin
+    always @(*) begin
         if (reset) begin
             d_out <= 16'd0;
         end
