@@ -254,12 +254,12 @@ module register (
     output reg  [15:0] d_out
 );
 
-    always @(*) begin
+    always @(posedge clk) begin
         if (reset) begin
-            d_out = 16'd0;
+            d_out <= 16'd0;
         end
         else if (en) begin
-            d_out = d_in;
+            d_out <= d_in;
         end
     end
 
