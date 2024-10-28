@@ -111,7 +111,9 @@ module control_unit (
             en_5 <= 0;
             en_6 <= 0;
             en_7 <= 0;
+            done <= 0;
         end else if (run) begin
+            done <= 0;
             case(i)
                 2'd0: begin
                     mux_sel <= instruction[15:13];
@@ -119,6 +121,7 @@ module control_unit (
                     i <= 1;
                 end
                 2'd1: begin
+                    en_s <= 0;
                     mux_sel <= instruction[12:10];
                     en_c <= 1;
                     sel <= instruction[6:3];
@@ -126,6 +129,7 @@ module control_unit (
                     i <= 2;
                 end
                 2'd2: begin
+                    en_c <= 0;
                     case(instruction[15:13])
                         3'd0: en_0 <= 1;
                         3'd1: en_1 <= 1;
