@@ -256,10 +256,10 @@ module register (
 
     always @(*) begin
         if (reset) begin
-            d_out <= 16'd0;
+            d_out = 16'd0;
         end
         else if (en) begin
-            d_out <= d_in;
+            d_out = d_in;
         end
     end
 
