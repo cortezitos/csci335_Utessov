@@ -18,7 +18,8 @@ int main(int argc, char **argv) {
     tb->instruction = 0b0000010001001000;
     tb->reset = 0;
     tb->run = 1;
-
+    toggle_clock(tb);
+    toggle_clock(tb);
 
 
     std::cout << "reg_0_out = " << static_cast<int>(tb->reg_0_out) << "\n";
