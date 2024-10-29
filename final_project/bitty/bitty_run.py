@@ -18,6 +18,14 @@ HELP_MSG_CLEAN_SIMULATION = "Clean simulation. Remove all Verilator generated fi
 # Each of these modules need to have test bench written in C++.
 MODULES = []
 MODULES.append("bitty_core")
+MODULES.append("alu")
+MODULES.append("control_unit")
+MODULES.append("multiplexer")
+MODULES.append("register")
+
+
+
+
 
 # Linux commands invoked within this script.
 # Verilator command to generate C++ and Makefiles.

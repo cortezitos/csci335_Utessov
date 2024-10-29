@@ -2,8 +2,7 @@
 #include "verilated.h"
 #include <iostream>
 
-void multiplexer_select(Vmultiplexer *tb, int d_in, int reg_0, int reg_1, int reg_2, int reg_3, int reg_4, int reg_5, int reg_6, int reg_7, uint8_t mux_sel) {
-    tb->d_in = d_in;
+void multiplexer_select(Vmultiplexer *tb, int reg_0, int reg_1, int reg_2, int reg_3, int reg_4, int reg_5, int reg_6, int reg_7, uint8_t mux_sel) {
     tb->reg_0 = reg_0;
     tb->reg_1 = reg_1;
     tb->reg_2 = reg_2;
@@ -22,11 +21,11 @@ int main(int argc, char **argv) {
     Vmultiplexer *tb = new Vmultiplexer;
 
     std::cout << "Test 1: Select d_in (mux_sel = 0)\n";
-    multiplexer_select(tb, 25, 0, 1, 2, 3, 4, 5, 6, 7, 0);
+    multiplexer_select(tb, 0, 1, 2, 3, 4, 5, 6, 7, 0);
     std::cout << "d_out = " << tb->d_out << " (Expected = 25)\n";
 
     std::cout << "Test 2: Select reg_3 (mux_sel = 3)\n";
-    multiplexer_select(tb, 25, 0, 1, 2, 3, 4, 5, 6, 7, 3);
+    multiplexer_select(tb, 0, 1, 2, 3, 4, 5, 6, 7, 3);
     std::cout << "d_out = " << tb->d_out << " (Expected = 2)\n";
 
     tb->final();
