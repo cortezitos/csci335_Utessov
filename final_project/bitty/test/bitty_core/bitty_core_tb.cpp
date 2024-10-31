@@ -2,6 +2,7 @@
 #include "verilated.h"
 #include <iostream>
 
+// this is for guthub -- everything works well lab 11
 void toggle_clock(Vbitty_core *tb) {
     tb->clk = !tb->clk;
     tb->eval();
