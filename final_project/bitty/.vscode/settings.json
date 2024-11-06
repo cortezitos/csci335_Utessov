@@ -1,3 +1,9 @@
 {
-    "C_Cpp.default.compilerPath": "c:\\Users\\uteso\\OneDrive\\Desktop\\csci335_Utessov\\final_project\\bitty\\test\\bitty_core\\bitty_core_tb.cpp"
+    "C_Cpp.default.compilerPath": "c:\\Users\\uteso\\OneDrive\\Desktop\\csci335_Utessov\\final_project\\bitty\\test\\bitty_core\\bitty_core_tb.cpp",
+    "files.associations": {
+        "bitset": "cpp",
+        "memory": "cpp",
+        "random": "cpp",
+        "optional": "cpp"
+    }
 }

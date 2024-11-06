@@ -3,45 +3,34 @@
 #include <iostream>
 #include <array> 
 
-void alu(int a, int b, int sel, int mode, int out[]);
+int alu(int a, int b, int sel);
 
 int main(int argc, char **argv) {
     Verilated::commandArgs(argc, argv);
 
     Valu *tb = new Valu;
 
-    int a = 47;
-    int b = 59;
-    int select = 8;
-    int mode = 0;
+    int a = 3;
+    int b = 4;
+    int select = 0;
 
-    int out[3] = {0, 0, 0};
+    for (select = 0; select < 8; select++){
 
     tb->in_a = a;
     tb->in_b = b;
     tb->select = select;
-    tb->mode = mode;
 
-    alu(a, b, select, mode, out);
+    int out = alu(a, b, select);
 
     tb->eval();
 
     std::cout << " A: " << a << " B: " << b 
-              << " Select: " << select << " Mode: " << mode
-              << std::endl 
-              << "ALU Output = " << static_cast<int16_t>(tb->alu_out)
-              << " (Expected = " << out[0] << ") "
-              << (static_cast<int16_t>(tb->alu_out) == out[0] ? "PASS" : "FAIL")
-              << std::endl
-              << "Carry Out = " << static_cast<int>(tb->carry_out) 
-              << " (Expected = " << out[1] << ") "
-              << (static_cast<int>(tb->carry_out) == out[1] ? "PASS" : "FAIL")
-              << std::endl
-              << "Compare = " << static_cast<int>(tb->compare) 
-              << " (Expected = " << out[2] << ") "
-              << (static_cast<int>(tb->compare) == out[2] ? "PASS" : "FAIL")
-              << std::endl;
+              << " Select: " << select << std::endl
 
+              << "ALU Output = " << static_cast<int16_t>(tb->alu_out)
+              << " (Expected = " << out << ") "
+              << (static_cast<int16_t>(tb->alu_out) == out ? "PASS" : "FAIL")
+              << std::endl;}
     
     tb->final();
     delete tb;
@@ -50,55 +39,20 @@ int main(int argc, char **argv) {
 }
 
 
-void alu(int a, int b, int sel, int mode, int out[]) {
-    out[1] = 0;          
-    out[2] = (a == b);   
+int alu(int a, int b, int sel) {
 
-    switch (mode) {
-    case 0: // Arithmetic mode
-        switch (sel) {
-            case 0:  out[0] = a; break;
-            case 1:  out[0] = a | b; break;
-            case 2:  out[0] = a | ~b; break;
-            case 3:  out[0] = -1; break;
-            case 4:  out[0] = a | (a & ~b); break;
-            case 5:  out[0] = (a | b) + (a & ~b); break;
-            case 6:  out[0] = a - b - 1; break;
-            case 7:  out[0] = (a & ~b) - 1; break;
-            case 8:  out[0] = a + (a & b); break;
-            case 9:  out[0] = a + b; break;
-            case 10: out[0] = (a | ~b) + (a & b); break;
-            case 11: out[0] = (a & b) - 1; break;
-            case 12: out[0] = a + a; break;
-            case 13: out[0] = (a | b) + a; break;
-            case 14: out[0] = (a | ~b) + a; break;
-            case 15: out[0] = a - 1; break;
-            default: out[0] = 0; break;
-        }
-        break;
-    case 1: // Logic mode
-        switch (sel) {
-            case 0:  out[0] = ~a; break;
-            case 1:  out[0] = ~(a | b); break;
-            case 2:  out[0] = ~a | b; break;
-            case 3:  out[0] = 0; break;
-            case 4:  out[0] = ~(a & b); break;
-            case 5:  out[0] = ~b; break;
-            case 6:  out[0] = a ^ b; break;
-            case 7:  out[0] = a & ~b; break;
-            case 8:  out[0] = ~a | b; break;
-            case 9:  out[0] = ~(a ^ b); break;
-            case 10: out[0] = b; break;
-            case 11: out[0] = a & b; break;
-            case 12: out[0] = 1; break;
-            case 13: out[0] = a | ~b; break;
-            case 14: out[0] = a | b; break;
-            case 15: out[0] = a; break;
-            default: out[0] = 0; break;
-        }
-        break;
-    default:
-        out[0] = 0;
-        break;
+    int out = 0;
+
+    switch (sel) {
+        case 0:  out = a + b; break;
+        case 1:  out = a - b; break;
+        case 2:  out = a & b; break;
+        case 3:  out = a | b; break;
+        case 4:  out = a ^ b; break;
+        case 5:  out = a << b; break;
+        case 6:  out = a >> b ; break;
+        case 7:  out = (a == b) ? 0 : (a > b) ? 1 : 2; break;
+        default: out = 0; break;
     }
+    return out;
 }

@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 
 
     std::cout << "Test 2: Instruction i = 1\n";
-    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_c = " << static_cast<int>(tb->en_s) << " alu_sel = " << static_cast<int>(tb->sel) << " alu_mode = " << static_cast<int>(tb->mode) << " (Expected: 1 1 4 0)\n";
+    std::cout << "mux_sel = " << static_cast<int>(tb->mux_sel) << " en_c = " << static_cast<int>(tb->en_s) << " alu_sel = " << static_cast<int>(tb->sel) << " (Expected: 1 1 4 0)\n";
 
     toggle_clock(tb);
     toggle_clock(tb);  

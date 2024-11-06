@@ -4,22 +4,20 @@ module bitty_core (
     input wire run,
     input wire [15:0] instruction,
     output wire done,
-    output reg [15:0] reg_c_out,
     output reg [15:0] reg_0_out,
     output reg [15:0] reg_1_out,
-    output reg [15:0] reg_s_out
-
+    output reg [15:0] reg_2_out,
+    output reg [15:0] reg_3_out,
+    output reg [15:0] reg_4_out,
+    output reg [15:0] reg_5_out,
+    output reg [15:0] reg_6_out,
+    output reg [15:0] reg_7_out
 );
     wire [15:0] alu_out, mux_out;
-    wire carry_out, compare;
-    wire [3:0] sel;
+    wire [2:0] sel;
     wire [2:0] mux_sel;
-    wire mode, en_s, en_c, en_0, en_1, en_2, en_3, en_4, en_5, en_6, en_7;
+    wire en_s, en_c, en_0, en_1, en_2, en_3, en_4, en_5, en_6, en_7;
 
-    wire [15:0] reg_2_out, reg_3_out, reg_4_out, reg_5_out, reg_6_out, reg_7_out;
-
-    assign reg_0_out = 20;
-    assign reg_1_out = 30;
 
     control_unit ctrl_unit (
         .instruction(instruction),
@@ -28,7 +26,6 @@ module bitty_core (
         .reset(reset),
         .sel(sel),
         .mux_sel(mux_sel),
-        .mode(mode),
         .en_s(en_s),
         .en_c(en_c),
         .en_0(en_0),
@@ -67,9 +64,6 @@ module bitty_core (
         .in_a(reg_s_out),
         .in_b(mux_out),
         .select(sel),
-        .mode(mode),
-        .carry_out(carry_out),
-        .compare(compare),
         .alu_out(alu_out)
     );
 endmodule
