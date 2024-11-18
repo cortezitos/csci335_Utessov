@@ -22,6 +22,7 @@ MODULES.append("alu")
 MODULES.append("control_unit")
 MODULES.append("multiplexer")
 MODULES.append("register")
+MODULES.append("memory")
 
 
 
