@@ -5,11 +5,11 @@ module memory(
     output reg [15:0]  out
 );
 
-    reg [2:0] pc = 0; 
-    reg [15:0] mem [7:0];
+    reg [7:0] pc = 0; 
+    reg [15:0] mem [255:0];
 
     initial
-    $readmemh("rtl/instructions.mem", mem);
+    $readmemh("instructions.mem", mem);
 
     always @(posedge clk) begin
         if (reset) begin
