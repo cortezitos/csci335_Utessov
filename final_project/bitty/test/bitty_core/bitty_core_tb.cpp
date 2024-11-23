@@ -15,9 +15,11 @@ void toggle_clock(Vbitty_core *tb) {
     tb->eval();
 }
 
-// extern "C" void notify_reached_done() {
-//     std::cout << "Counter reached done!" << std::endl;
-// }
+
+extern "C" void notify_done() {
+    std::cout << "Done!" << std::endl;
+}
+
 
 void generate_instructions() {
     BittyInstructionGenerator generator;
@@ -31,18 +33,32 @@ void generate_instructions() {
         uint16_t instruction = generator.Generate();
         outFile << std::hex << std::setw(4) << std::setfill('0') << instruction << std::endl;
     }
-    // Add halt instruction
-    outFile << "0001" << std::endl;
+    outFile << "0020" << std::endl;
     outFile.close();
 }
 
 int main(int argc, char **argv) {
-    // Generate instructions first
-    generate_instructions();
     
+    BittyEmulator emulator;
+
+    std::cout << "Do you want to run Fibonacci sequence? (y/n): ";
+    char run_fib;
+    std::cin >> run_fib;
+    if (run_fib == 'n') {
+        generate_instructions(); 
+    } else if (run_fib == 'y') {
+        emulator.SetRegisterValue(0, 0);
+        emulator.SetRegisterValue(1, 1);    
+        emulator.SetRegisterValue(2, 1);
+        emulator.SetRegisterValue(3, 0);
+        emulator.SetRegisterValue(4, 0);
+        emulator.SetRegisterValue(5, 0);
+        emulator.SetRegisterValue(6, 0);
+        emulator.SetRegisterValue(7, 0);
+    }
+
     Verilated::commandArgs(argc, argv);
     Vbitty_core *tb = new Vbitty_core;
-    BittyEmulator emulator;
     
     int passed_instructions = 0;
     int total_instructions = 0;
@@ -52,7 +68,6 @@ int main(int argc, char **argv) {
     toggle_clock(tb);
     tb->reset = 0;
 
-    // Set initial register values to match emulator
     tb->reg_0_out = emulator.GetRegisterValue(0);
     tb->reg_1_out = emulator.GetRegisterValue(1);
     tb->reg_2_out = emulator.GetRegisterValue(2);
@@ -83,21 +98,22 @@ int main(int argc, char **argv) {
     std::cout << std::endl;
 
     do {
-        toggle_clock(tb);
+
+
+
         uint16_t current_instruction = tb->instruction;
         
         total_instructions++;
         std::cout << "\nInstruction " << total_instructions << ": " 
                  << std::bitset<16>(current_instruction) << "\n";
 
-        // Run the same instruction through emulator
         uint16_t emulator_result = emulator.Evaluate(current_instruction);
 
         toggle_clock(tb);
         toggle_clock(tb);
         toggle_clock(tb);
+        toggle_clock(tb);
 
-        // Compare results
         bool instruction_passed = true;
         for (int i = 0; i < 8; i++) {
             uint16_t hw_val = (i == 0) ? tb->reg_0_out :
@@ -124,7 +140,7 @@ int main(int argc, char **argv) {
         std::cout << "\nInstruction Result: " 
                  << (instruction_passed ? "PASS" : "FAIL") << std::endl;
 
-    } while (tb->instruction != 0x0001);
+    } while (tb->instruction != 0x0020);
 
     std::cout << "\nFinal Results:" << std::endl;
     std::cout << "Total Instructions: " << total_instructions << std::endl;

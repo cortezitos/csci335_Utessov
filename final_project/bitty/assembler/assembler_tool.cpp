@@ -4,6 +4,8 @@
 #include <vector>
 #include <cstdint>
 #include <bitset>
+#include <sstream>
+#include <iomanip>
 
 std::vector<std::string> read_file(std::string file_path) {
     std::ifstream file(file_path);
@@ -60,8 +62,13 @@ std::vector<std::string> assemble(std::vector<std::string> instructions) {
         int Rx = std::stoi(instruction.substr(4));
         int Ry = std::stoi(instruction.substr(6));
         std::string ALU_sel = instruction.substr(0, 3);
-        assembled_instructions.push_back(get_binary_instruction(Rx, Ry, ALU_sel));
+        std::string binary_instruction = get_binary_instruction(Rx, Ry, ALU_sel);
+        std::uint16_t hex_instruction = std::stoul(binary_instruction, nullptr, 2);
+        std::stringstream ss;
+        ss << std::hex << std::setw(4) << std::setfill('0')<< hex_instruction;
+        assembled_instructions.push_back(ss.str());
     }
+    assembled_instructions.push_back("0020");
     return assembled_instructions;
 }
 

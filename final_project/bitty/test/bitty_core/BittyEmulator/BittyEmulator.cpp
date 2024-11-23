@@ -78,4 +78,8 @@ uint16_t BittyEmulator::GetRegisterValue(uint16_t reg_num) {
     }
 }
 
-
+void BittyEmulator::SetRegisterValue(uint16_t reg_num, uint16_t value) {
+    if (reg_num < registers_.size()) {
+        registers_[reg_num] = value;
+    }
+}
