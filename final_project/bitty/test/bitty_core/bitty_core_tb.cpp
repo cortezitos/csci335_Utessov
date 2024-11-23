@@ -85,7 +85,6 @@ int main(int argc, char **argv) {
     do {
         toggle_clock(tb);
         uint16_t current_instruction = tb->instruction;
-        if (current_instruction == 0x0000) break;
         
         total_instructions++;
         std::cout << "\nInstruction " << total_instructions << ": " 

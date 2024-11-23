@@ -32,8 +32,8 @@ MODULES.append("memory")
 # Verilator command to generate C++ and Makefiles.
 VERILATE_COMMAND = "verilator --assert -I./rtl --Wall {0} --cc ./rtl/{1}.v " + \
     "--exe ./test/{1}/{1}_tb.cpp " + \
-    "./test/{1}/BittyEmulator/BittyEmulator.cpp " + \
-    "./test/{1}/BittyInstructionGenerator/BittyInstructionGenerator.cpp"
+    "./test/bitty_core/BittyEmulator/BittyEmulator.cpp " + \
+    "./test/bitty_core/BittyInstructionGenerator/BittyInstructionGenerator.cpp"
 MAKE_COMMAND = "make -C obj_dir/ -f V{0}.mk V{0}"
 CLEAN_COMMAND = "rm -rf ./obj_dir"
 

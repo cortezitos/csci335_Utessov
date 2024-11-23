@@ -1,3 +1,7 @@
+import "DPI-C" function void notify_done(); // 1
+
+
+
 module control_unit (
     input  reg [15:0] instruction,
     input  wire        run,
@@ -61,6 +65,7 @@ module control_unit (
                         3'd7: en_7 <= 1;
                     endcase
                     done <= 1;
+                    notify_done();
                     i <= 3;
                 end
                 2'd3:begin
