@@ -24,86 +24,225 @@ void write_file(std::vector<std::string> instructions, std::string file_path) {
     }
 }
 
-std::string get_instruction_name(uint16_t Rx, uint16_t Ry, uint16_t ALU_sel, uint16_t format, uint16_t immediate = 0) {
-    std::string instruction_name;
-    switch (ALU_sel) {
-        case 0b000:  instruction_name = "ADD"; break;
-        case 0b001:  instruction_name = "SUB"; break;
-        case 0b010:  instruction_name = "AND"; break;
-        case 0b011:  instruction_name = "OR"; break;
-        case 0b100:  instruction_name = "XOR"; break;
-        case 0b101:  instruction_name = "SHL"; break;
-        case 0b110:  instruction_name = "SHR"; break;
-        case 0b111:  instruction_name = "CMP"; break;
-    }
-    if (format == 0b00) {
-        return instruction_name + " r" + std::to_string(Rx) + " r" + std::to_string(Ry);
-    } else {
-        return instruction_name + " r" + std::to_string(Rx) + " #" + std::to_string(immediate);
-    }
+
+
+std::string get_binary_alu(std::string command, std::string Rx, std::string Ry) {
+    std::string binary_instruction;
+    if (command == "add") binary_instruction = "000";
+    else if (command == "sub") binary_instruction = "001";
+    else if (command == "and") binary_instruction = "010";
+    else if (command == "or") binary_instruction = "011";
+    else if (command == "xor") binary_instruction = "100";
+    else if (command == "shl") binary_instruction = "101";
+    else if (command == "shr") binary_instruction = "110";
+    else if (command == "cmp") binary_instruction = "111";
+
+    int new_Rx = std::stoi(Rx.substr(1));
+    int new_Ry = std::stoi(Ry.substr(1));
+
+    std::string binaryRx = std::bitset<3>(new_Rx).to_string();
+    std::string binaryRy = std::bitset<3>(new_Ry).to_string();
+
+    
+    return binaryRx + binaryRy + "00000" + binary_instruction + "00";
+
 }
 
-std::string get_binary_instruction(int Rx, int Ry, std::string ALU_sel, bool is_immediate = false, int immediate = 0) {
+std::string get_binary_branch(std::string command, std::string immediate) {
     std::string binary_instruction;
-    if (ALU_sel == "ADD" || ALU_sel == "ADDI") binary_instruction = "000";
-    else if (ALU_sel == "SUB" || ALU_sel == "SUBI") binary_instruction = "001";
-    else if (ALU_sel == "AND" || ALU_sel == "ANDI") binary_instruction = "010";
-    else if (ALU_sel == "OR" || ALU_sel == "ORI") binary_instruction = "011";
-    else if (ALU_sel == "XOR" || ALU_sel == "XORI") binary_instruction = "100";
-    else if (ALU_sel == "SHL" || ALU_sel == "SHLI") binary_instruction = "101";
-    else if (ALU_sel == "SHR" || ALU_sel == "SHRI") binary_instruction = "110";
-    else if (ALU_sel == "CMP" || ALU_sel == "CMPI") binary_instruction = "111";
+    if (command == "bie") binary_instruction = "00";
+    else if (command == "big") binary_instruction = "01";
+    else if (command == "bil") binary_instruction = "10";
 
-    std::string Rx_bin = std::bitset<3>(Rx).to_string();
-    std::string Ry_bin = is_immediate ? std::bitset<8>(immediate).to_string() : std::bitset<3>(Ry).to_string();
+    int new_immediate = std::stoi(immediate.substr(1));
 
-    if (is_immediate) {
-        return Rx_bin + Ry_bin + binary_instruction + "01";
-    } else {
-        return Rx_bin + Ry_bin + "00000" + binary_instruction + "00";
-    }
+    std::string binaryImmediate = std::bitset<12>(new_immediate).to_string();
+
+    return binaryImmediate + binary_instruction + "10";
+}
+
+std::string get_binary_immediate(std::string command, std::string Rx, std::string immediate) {
+    std::string binary_instruction;
+    if (command == "addi") binary_instruction = "000";
+    else if (command == "subi") binary_instruction = "001";
+    else if (command == "andi") binary_instruction = "010";
+    else if (command == "ori") binary_instruction = "011";
+    else if (command == "xori") binary_instruction = "100";
+    else if (command == "shli") binary_instruction = "101";
+    else if (command == "shri") binary_instruction = "110";
+    else if (command == "cmpi") binary_instruction = "111";
+
+    int new_Rx = std::stoi(Rx.substr(1));
+    int new_immediate = std::stoi(immediate.substr(1));
+
+    std::string binaryRx = std::bitset<3>(new_Rx).to_string();
+    std::string binaryImmediate = std::bitset<8>(new_immediate).to_string();
+
+    return binaryRx + binaryImmediate + binary_instruction + "01";
+}
+
+std::string get_binary_ldst(std::string command, std::string Rx, std::string Ry) {
+    std::string binary_instruction;
+    if (command == "ld") binary_instruction = "0";
+    else if (command == "st") binary_instruction = "1";
+
+    int new_Rx = std::stoi(Rx.substr(1));
+    int new_Ry = std::stoi(Ry.substr(1));
+
+    std::string binaryRx = std::bitset<3>(new_Rx).to_string();
+    std::string binaryRy = std::bitset<3>(new_Ry).to_string();
+
+    return binaryRx + binaryRy + "0000000" + binary_instruction + "11";
 }
 
 std::vector<std::string> assemble(std::vector<std::string> instructions) {
     std::vector<std::string> assembled_instructions;
     for (std::string instruction : instructions) {
         std::istringstream iss(instruction);
-        std::string ALU_sel, Rx_str, Ry_or_imm_str;
-        iss >> ALU_sel >> Rx_str >> Ry_or_imm_str;
+        std::string command, operand1, operand2;
+        iss >> command >> operand1;
 
-        int Rx = std::stoi(Rx_str.substr(1));
-        bool is_immediate = (ALU_sel.back() == 'I');
-        int Ry_or_imm = std::stoi(Ry_or_imm_str.substr(1));
+        std::string binary_instruction;
 
-        std::string binary_instruction = get_binary_instruction(Rx, Ry_or_imm, ALU_sel, is_immediate, Ry_or_imm);
-        std::uint16_t hex_instruction = std::stoul(binary_instruction, nullptr, 2);
+        if (command[0] == 'b') {
+            binary_instruction = get_binary_branch(command, operand1);
+        } else {
+            iss >> operand2;
+            if (operand2[0] == '#') {
+                binary_instruction = get_binary_immediate(command, operand1, operand2);
+            } else if (command[0] == 'l' || command[0] == 's') {
+                binary_instruction = get_binary_ldst(command, operand1, operand2);
+            } else {
+                binary_instruction = get_binary_alu(command, operand1, operand2);
+            }
+        }
+
+        uint16_t value = static_cast<uint16_t>(std::stoi(binary_instruction, nullptr, 2));
         std::stringstream ss;
-        ss << std::hex << std::setw(4) << std::setfill('0') << hex_instruction;
+        ss << std::hex << std::setw(4) << std::setfill('0') << value;
         assembled_instructions.push_back(ss.str());
     }
     assembled_instructions.push_back("0020");
     return assembled_instructions;
 }
 
+
+std::string dissasemble_alu(std::string instruction) {
+    std::string ALU_sel = instruction.substr(instruction.size() - 5, 3);
+
+    std::string instruction_name;
+
+    if (ALU_sel == "000") instruction_name = "add";
+    else if (ALU_sel == "001") instruction_name = "sub";
+    else if (ALU_sel == "010") instruction_name = "and";
+    else if (ALU_sel == "011") instruction_name = "or";
+    else if (ALU_sel == "100") instruction_name = "xor";
+    else if (ALU_sel == "101") instruction_name = "shl";
+    else if (ALU_sel == "110") instruction_name = "shr";
+    else if (ALU_sel == "111") instruction_name = "cmp";
+    else instruction_name = "Unknown ALU operation";
+
+    std::string Rx = instruction.substr(0, 3);   
+    std::string Ry = instruction.substr(3, 3);    
+
+    int Rx_int = std::stoi(Rx, nullptr, 2);
+    int Ry_int = std::stoi(Ry, nullptr, 2);
+
+    return instruction_name + " r" + std::to_string(Rx_int) + " r" + std::to_string(Ry_int);
+}
+
+
+std::string dissasemble_immediate(std::string instruction) {
+    std::string ALU_sel = instruction.substr(instruction.size() - 5, 3);
+
+    std::string instruction_name;
+
+    if (ALU_sel == "000") instruction_name = "addi";
+    else if (ALU_sel == "001") instruction_name = "subi";
+    else if (ALU_sel == "010") instruction_name = "andi";
+    else if (ALU_sel == "011") instruction_name = "ori";
+    else if (ALU_sel == "100") instruction_name = "xori";
+    else if (ALU_sel == "101") instruction_name = "shli";
+    else if (ALU_sel == "110") instruction_name = "shri";
+    else if (ALU_sel == "111") instruction_name = "cmpi";
+    else instruction_name = "Unknown immediate operation";
+
+    std::string Rx = instruction.substr(0, 3);            
+    std::string immediate = instruction.substr(3, 8);     
+
+    int Rx_int = std::stoi(Rx, nullptr, 2);
+    int immediate_int = std::stoi(immediate, nullptr, 2);
+
+    return instruction_name + " r" + std::to_string(Rx_int) + " #" + std::to_string(immediate_int);
+}
+
+
+std::string dissasemble_branch(std::string instruction) {
+    std::string branch_sel = instruction.substr(instruction.size() - 4, 2);
+
+    std::string instruction_name;
+
+    if (branch_sel == "00") instruction_name = "bie";
+    else if (branch_sel == "01") instruction_name = "big";
+    else if (branch_sel == "10") instruction_name = "bil";
+    else instruction_name = "Unknown branch operation";
+
+    std::string immediate = instruction.substr(0, 12);  
+
+    int immediate_int = std::stoi(immediate, nullptr, 2);
+
+    return instruction_name + " #" + std::to_string(immediate_int);
+}
+
+std::string dissasemble_ldst(std::string instruction) {
+    std::string ldst_sel = instruction.substr(instruction.size() - 3, 1);
+
+    std::string instruction_name;
+
+    if (ldst_sel == "0") instruction_name = "ld";
+    else if (ldst_sel == "1") instruction_name = "st";
+
+    std::string Rx = instruction.substr(0, 3);
+    std::string Ry = instruction.substr(3, 3);
+
+    int Rx_int = std::stoi(Rx, nullptr, 2);
+    int Ry_int = std::stoi(Ry, nullptr, 2);
+
+    return instruction_name + " r" + std::to_string(Rx_int) + " r" + std::to_string(Ry_int);
+
+    
+}
+
+
 std::vector<std::string> disassemble(std::vector<std::string> instructions) {
     std::vector<std::string> disassembled_instructions;
 
     for (std::string instruction : instructions) {
-        uint16_t binary = std::stoul(instruction, nullptr, 16); 
-        uint16_t Rx = (binary >> 13) & 0x07; 
-        uint16_t format = binary & 0x03;
-        uint16_t ALU_sel = (binary >> 2) & 0x07; 
 
-        if (format == 0b00) {
-            uint16_t Ry = (binary >> 10) & 0x07;
-            disassembled_instructions.push_back(get_instruction_name(Rx, Ry, ALU_sel, format));
+        uint16_t binary_value = static_cast<uint16_t>(std::stoul(instruction, nullptr, 16));
+        std::string binary_instruction = std::bitset<16>(binary_value).to_string();
+
+        std::string last_two_bits = binary_instruction.substr(binary_instruction.size() - 2);
+
+        std::string disassembled_instruction;
+
+        if (last_two_bits == "00") {
+            disassembled_instruction = dissasemble_alu(binary_instruction);
+        } else if (last_two_bits == "01") {
+            disassembled_instruction = dissasemble_immediate(binary_instruction);
+        } else if (last_two_bits == "10") {
+            disassembled_instruction = dissasemble_branch(binary_instruction);
+        } else if (last_two_bits == "11") {
+            disassembled_instruction = dissasemble_ldst(binary_instruction);
         } else {
-            uint16_t immediate = (binary >> 5) & 0xFF;
-            disassembled_instructions.push_back(get_instruction_name(Rx, 0, ALU_sel, format, immediate));
+            disassembled_instruction = "Unknown instruction format";
         }
+
+        disassembled_instructions.push_back(disassembled_instruction);
     }
     return disassembled_instructions;
 }
+
 
 
 

@@ -43,11 +43,18 @@ module control_unit (
         end else if (run) begin
             case(i)
                 2'd0: begin
-                    mux_sel <= {1'b0, instruction[15:13]};
-                    en_s <= 1;
-                    immediate <= (instruction[1:0] == 2'b01) ? 
-                                {8'b0, instruction[12:5]} : 16'd0;
-                    i <= 1;
+                    if (instruction[1:0] == 2'b10) begin
+                        done <= 1;
+                        notify_done();
+                        i <= 3;
+                    end else begin
+
+                        mux_sel <= {1'b0, instruction[15:13]};
+                        en_s <= 1;
+                        immediate <= (instruction[1:0] == 2'b01) ? 
+                                    {8'b0, instruction[12:5]} : 16'd0;
+                        i <= 1;
+                    end
                 end
                 2'd1: begin
                     en_s <= 0;

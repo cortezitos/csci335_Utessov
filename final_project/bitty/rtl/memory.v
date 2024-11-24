@@ -1,26 +1,21 @@
 module memory(
-    input  wire         clk,
-    input  wire         done,
-    input  wire         reset,
-    output reg [15:0]  out
+    input wire [7:0] pc,
+    output reg [15:0]  out,
+    output reg       run
 );
 
-    reg [7:0] pc = 0; 
     reg [15:0] mem [255:0];
 
     initial
     $readmemh("instructions.mem", mem);
 
-    always @(posedge clk) begin
-        if (reset) begin
-            pc <= 0;
-        end
-        else if (done) begin
-            pc <= pc + 1;
-            out <= mem[pc + 1];
-        end
-        else if (pc == 0) begin
-            out <= mem[0];
+    always @(*) begin
+        out = mem[pc];
+
+        if (out == 16'h0020) begin
+            run = 0;
+        end else begin
+            run = 1;
         end
     end
 

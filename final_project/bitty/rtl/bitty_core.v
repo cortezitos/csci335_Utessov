@@ -1,7 +1,7 @@
 module bitty_core (
     input wire clk,
     input wire reset,
-    input wire run,
+    output wire run,
     output wire [15:0] instruction,
     output wire done,
     output reg [15:0] reg_0_out,
@@ -21,7 +21,7 @@ module bitty_core (
     wire [3:0] mux_sel;
     wire en_s, en_c, en_0, en_1, en_2, en_3, en_4, en_5, en_6, en_7;
     wire [15:0] immediate;
-
+    wire [7:0] pc;
 
 
 
@@ -62,10 +62,18 @@ module bitty_core (
 
 
     memory memry(
+        .pc(pc),
+        .out(instruction),
+        .run(run)
+    );
+
+    branch_logic branch_logic (
         .clk(clk),
-        .done(done),
         .reset(reset),
-        .out(instruction)
+        .instruction(instruction),
+        .last_alu_result(reg_c_out),
+        .done(done),
+        .pc(pc)
     );
 
     multiplexer mux (

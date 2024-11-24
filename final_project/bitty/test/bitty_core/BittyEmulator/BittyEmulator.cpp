@@ -1,13 +1,49 @@
 #include "BittyEmulator.h"
 
-BittyEmulator::BittyEmulator() : registers_(8, 0) {
+BittyEmulator::BittyEmulator() : registers_(8, 0), memory_(256, 0), pc_(0) {
+    std::ifstream file("instructions.mem");
+    std::string line;
+    uint16_t address = 0;
+    while (std::getline(file, line)) {
+        memory_[address++] = std::stoul(line, nullptr, 16);
+    }
 
+    pc_ = 0;
 } 
 
-uint16_t BittyEmulator::Evaluate(uint16_t instruction) {
-    uint16_t Rx = (instruction >> 13) & 0x07; 
-    uint16_t ALU_sel = (instruction >> 2) & 0x07; 
-    uint16_t format = instruction & 0x03;  
+uint16_t BittyEmulator::Evaluate() {
+    uint16_t instruction = memory_[pc_];
+    pc_++;
+    uint16_t format = instruction & 0x03;
+
+    if (format == 0b10) {
+        uint16_t immediate = (instruction >> 4) & 0x0FFF;  
+        uint16_t condition = (instruction >> 2) & 0x03;    
+        
+        uint16_t comp_result = prev_result_;
+        
+        bool should_branch = false;
+        switch (condition) {
+            case 0b00:  // BIE 
+                should_branch = (comp_result == 0);
+                break;
+            case 0b01:  // BIG 
+                should_branch = (comp_result == 1);
+                break;
+            case 0b10:  // BIL 
+                should_branch = (comp_result == 2);
+                break;
+        }
+
+        if (should_branch) {
+            pc_ = immediate;
+        }
+        
+        return pc_;
+    }
+
+    uint16_t Rx = (instruction >> 13) & 0x07;
+    uint16_t ALU_sel = (instruction >> 2) & 0x07;
 
     uint16_t value_x = registers_[Rx];
     uint16_t value_y = 0;
@@ -65,6 +101,7 @@ uint16_t BittyEmulator::Evaluate(uint16_t instruction) {
     }
 
     registers_[Rx] = result;
+    prev_result_ = result;
     return result;
 }
 

@@ -39,7 +39,6 @@ void generate_instructions() {
 
 int main(int argc, char **argv) {
     
-    BittyEmulator emulator;
 
     std::cout << "Do you want to run your own instructions? (y/n): ";
     char run_fib;
@@ -47,6 +46,9 @@ int main(int argc, char **argv) {
     if (run_fib == 'n') {
         generate_instructions(); 
     } 
+
+    BittyEmulator emulator;
+
 
     Verilated::commandArgs(argc, argv);
     Vbitty_core *tb = new Vbitty_core;
@@ -69,8 +71,6 @@ int main(int argc, char **argv) {
     tb->reg_7_out = emulator.GetRegisterValue(7);
     toggle_clock(tb);
 
-    tb->run = 1;
-
     std::cout << "Initial register values:" << std::endl;
     for (int i = 0; i < 8; i++) {
         uint16_t hw_val = (i == 0) ? tb->reg_0_out :
@@ -90,19 +90,17 @@ int main(int argc, char **argv) {
 
     do {
 
-
-
         uint16_t current_instruction = tb->instruction;
         
         total_instructions++;
         std::cout << "\nInstruction " << total_instructions << ": " 
                  << std::bitset<16>(current_instruction) << "\n";
 
-        uint16_t emulator_result = emulator.Evaluate(current_instruction);
+        uint16_t emulator_result = emulator.Evaluate();
 
-        toggle_clock(tb);
-        toggle_clock(tb);
-        toggle_clock(tb);
+        while (!tb->done) {
+            toggle_clock(tb);
+        }
         toggle_clock(tb);
 
         bool instruction_passed = true;
