@@ -18,8 +18,9 @@ module bitty_core (
 );
     wire [15:0] alu_out;
     wire [2:0] sel;
-    wire [2:0] mux_sel;
+    wire [3:0] mux_sel;
     wire en_s, en_c, en_0, en_1, en_2, en_3, en_4, en_5, en_6, en_7;
+    wire [15:0] immediate;
 
 
 
@@ -54,7 +55,8 @@ module bitty_core (
         .en_5(en_5),
         .en_6(en_6),
         .en_7(en_7),
-        .done(done)
+        .done(done),
+        .immediate(immediate)
     );
 
 
@@ -70,7 +72,8 @@ module bitty_core (
         .reg_0(reg_0_out), .reg_1(reg_1_out), .reg_2(reg_2_out), .reg_3(reg_3_out),
         .reg_4(reg_4_out), .reg_5(reg_5_out), .reg_6(reg_6_out), .reg_7(reg_7_out),
         .mux_sel(mux_sel),
-        .d_out(mux_out)
+        .d_out(mux_out),
+        .immediate(immediate)
     );
 
     alu alu (

@@ -1,5 +1,0 @@
-SUB 3 3
-ADD 3 2
-ADD 2 1
-SUB 1 1
-ADD 1 3

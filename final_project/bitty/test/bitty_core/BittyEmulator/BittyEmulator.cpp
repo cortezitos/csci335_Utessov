@@ -1,25 +1,24 @@
 #include "BittyEmulator.h"
 
 BittyEmulator::BittyEmulator() : registers_(8, 0) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    registers_[0] = std::uniform_int_distribution<> (0, 10)(gen);
-    registers_[1] = std::uniform_int_distribution<> (0, 10)(gen);
-    registers_[2] = std::uniform_int_distribution<> (0, 10)(gen);
-    registers_[3] = std::uniform_int_distribution<> (0, 10)(gen);
-    registers_[4] = std::uniform_int_distribution<> (0, 10)(gen);
-    registers_[5] = std::uniform_int_distribution<> (0, 10)(gen);
-    registers_[6] = std::uniform_int_distribution<> (0, 10)(gen);
-    registers_[7] = std::uniform_int_distribution<> (0, 10)(gen);
+
 } 
 
 uint16_t BittyEmulator::Evaluate(uint16_t instruction) {
     uint16_t Rx = (instruction >> 13) & 0x07; 
-    uint16_t Ry = (instruction >> 10) & 0x07;
     uint16_t ALU_sel = (instruction >> 2) & 0x07; 
+    uint16_t format = instruction & 0x03;  
 
     uint16_t value_x = registers_[Rx];
-    uint16_t value_y = registers_[Ry];
+    uint16_t value_y = 0;
+
+    if (format == 0b00) {
+        uint16_t Ry = (instruction >> 10) & 0x07;
+        value_y = registers_[Ry];
+    } else if (format == 0b01) {
+        value_y = (instruction >> 5) & 0xFF; 
+    }
+
     uint16_t result = 0;
 
     switch (ALU_sel) {

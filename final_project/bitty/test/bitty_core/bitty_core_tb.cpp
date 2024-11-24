@@ -41,21 +41,12 @@ int main(int argc, char **argv) {
     
     BittyEmulator emulator;
 
-    std::cout << "Do you want to run Fibonacci sequence? (y/n): ";
+    std::cout << "Do you want to run your own instructions? (y/n): ";
     char run_fib;
     std::cin >> run_fib;
     if (run_fib == 'n') {
         generate_instructions(); 
-    } else if (run_fib == 'y') {
-        emulator.SetRegisterValue(0, 0);
-        emulator.SetRegisterValue(1, 1);    
-        emulator.SetRegisterValue(2, 1);
-        emulator.SetRegisterValue(3, 0);
-        emulator.SetRegisterValue(4, 0);
-        emulator.SetRegisterValue(5, 0);
-        emulator.SetRegisterValue(6, 0);
-        emulator.SetRegisterValue(7, 0);
-    }
+    } 
 
     Verilated::commandArgs(argc, argv);
     Vbitty_core *tb = new Vbitty_core;

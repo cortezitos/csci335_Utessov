@@ -8,7 +8,7 @@ module control_unit (
     input  wire        clk,
     input  wire        reset,
     output reg  [2:0]  sel,
-    output reg  [2:0]  mux_sel,
+    output reg  [3:0]  mux_sel,
     output reg         en_s,
     output reg         en_c,
     output reg         en_0,
@@ -19,7 +19,8 @@ module control_unit (
     output reg         en_5,
     output reg         en_6,
     output reg         en_7,
-    output reg        done
+    output reg        done,
+    output reg  [15:0] immediate
 );
 
     reg [1:0] i = 0;
@@ -38,16 +39,21 @@ module control_unit (
             en_6 <= 0;
             en_7 <= 0;
             done <= 0;
+            immediate <= 16'd0;
         end else if (run) begin
             case(i)
                 2'd0: begin
-                    mux_sel <= instruction[15:13];
+                    mux_sel <= {1'b0, instruction[15:13]};
                     en_s <= 1;
+                    immediate <= (instruction[1:0] == 2'b01) ? 
+                                {8'b0, instruction[12:5]} : 16'd0;
                     i <= 1;
                 end
                 2'd1: begin
                     en_s <= 0;
-                    mux_sel <= instruction[12:10];
+                    mux_sel <= (instruction[1:0] == 2'b01) ? 
+                              4'b1000 : 
+                              {1'b0, instruction[12:10]};
                     en_c <= 1;
                     sel <= instruction[4:2];
                     i <= 2;
