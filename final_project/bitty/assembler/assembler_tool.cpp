@@ -81,19 +81,6 @@ std::string get_binary_immediate(std::string command, std::string Rx, std::strin
     return binaryRx + binaryImmediate + binary_instruction + "01";
 }
 
-std::string get_binary_ldst(std::string command, std::string Rx, std::string Ry) {
-    std::string binary_instruction;
-    if (command == "ld") binary_instruction = "0";
-    else if (command == "st") binary_instruction = "1";
-
-    int new_Rx = std::stoi(Rx.substr(1));
-    int new_Ry = std::stoi(Ry.substr(1));
-
-    std::string binaryRx = std::bitset<3>(new_Rx).to_string();
-    std::string binaryRy = std::bitset<3>(new_Ry).to_string();
-
-    return binaryRx + binaryRy + "0000000" + binary_instruction + "11";
-}
 
 std::vector<std::string> assemble(std::vector<std::string> instructions) {
     std::vector<std::string> assembled_instructions;
@@ -110,8 +97,6 @@ std::vector<std::string> assemble(std::vector<std::string> instructions) {
             iss >> operand2;
             if (operand2[0] == '#') {
                 binary_instruction = get_binary_immediate(command, operand1, operand2);
-            } else if (command[0] == 'l' || command[0] == 's') {
-                binary_instruction = get_binary_ldst(command, operand1, operand2);
             } else {
                 binary_instruction = get_binary_alu(command, operand1, operand2);
             }
@@ -194,24 +179,7 @@ std::string dissasemble_branch(std::string instruction) {
     return instruction_name + " #" + std::to_string(immediate_int);
 }
 
-std::string dissasemble_ldst(std::string instruction) {
-    std::string ldst_sel = instruction.substr(instruction.size() - 3, 1);
 
-    std::string instruction_name;
-
-    if (ldst_sel == "0") instruction_name = "ld";
-    else if (ldst_sel == "1") instruction_name = "st";
-
-    std::string Rx = instruction.substr(0, 3);
-    std::string Ry = instruction.substr(3, 3);
-
-    int Rx_int = std::stoi(Rx, nullptr, 2);
-    int Ry_int = std::stoi(Ry, nullptr, 2);
-
-    return instruction_name + " r" + std::to_string(Rx_int) + " r" + std::to_string(Ry_int);
-
-    
-}
 
 
 std::vector<std::string> disassemble(std::vector<std::string> instructions) {
@@ -233,8 +201,6 @@ std::vector<std::string> disassemble(std::vector<std::string> instructions) {
         } else if (last_two_bits == "10") {
             disassembled_instruction = dissasemble_branch(binary_instruction);
         } else if (last_two_bits == "11") {
-            disassembled_instruction = dissasemble_ldst(binary_instruction);
-        } else {
             disassembled_instruction = "Unknown instruction format";
         }
 
